@@ -145,7 +145,7 @@ if not st.session_state.nextpage:
         ptw_list.loc[i] = rowseries
 
     if cmd == "Show List":
-      key = st.selectbox("Choose: ", ("Completed", 'Watching', 'On-hold', 'Dropped', 'Plan to watch'))
+      key = st.selectbox("Choose: ", ("All", "Completed", 'Watching', 'On-hold', 'Dropped', 'Plan to watch'))
       dict1 = {'All': all_ani_list,
                'Watching': wat_list, 
                'Completed': owari_list, 
