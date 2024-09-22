@@ -57,9 +57,9 @@ if not st.session_state.nextpage:
             'Tags': [], 'Season':[]}
     all_ani_list = pd.DataFrame(anidictmodel)
     csvfile = st.file_uploader("Upload your locally saved DrAniList: ")
-    df = st.file_uploader("Upload your MyAnimeList csv file: ")
-
-    df.rename(columns={
+    malfile = st.file_uploader("Upload your MyAnimeList csv file: ")
+    mal = pd.read_csv(malfile)
+    mal.rename(columns={
     'series_title': 'Title',
     'series_type': 'Type',
     'series_episodes': 'Episodes',
@@ -72,28 +72,28 @@ if not st.session_state.nextpage:
 
     cols_to_drop = []
 
-    for [col, cs] in df.T.iterrows():
+    for [col, cs] in mal.T.iterrows():
         if col not in all_ani_list.columns:
             cols_to_drop.append(col)
-    df.drop(columns=cols_to_drop, inplace=True)
+    mal.drop(columns=cols_to_drop, inplace=True)
 
     for col, cs in all_ani_list.T.iterrows():
-        if col not in df.columns:
-            df[col] = all_ani_list[col]
+        if col not in mal.columns:
+            mal[col] = all_ani_list[col]
       
     i = 0
-    for row,rs in df.iterrows():
+    for row,rs in mal.iterrows():
         i += 1
-        df['S.no'][row] = int(i)
-    df.set_index('S.no', inplace = True)
-    df = df.reindex(columns = all_ani_list.columns)
+        mal['S.no'][row] = int(i)
+    mal.set_index('S.no', inplace = True)
+    mal = mal.reindex(columns = all_ani_list.columns)
 
 
 
     if not csvfile == pd.DataFrame():
         all_ani_list = pd.read_csv(csvfile, sep = '*', index_col = 'S.no')
-    if not df == pd.DataFrame():
-        all_ani_list = df
+    if not mal == pd.DataFrame():
+        all_ani_list = mal
     freshuse = st.checkbox("If you haven't already used DrAniLIst click here to get DrAniList file: ")
   
     if freshuse:
