@@ -56,7 +56,6 @@ if not st.session_state.nextpage:
             'End-date': [], 'Source': [], 'Score': [], 
             'Tags': [], 'Season':[]}
     all_ani_list = pd.DataFrame(anidictmodel)
-    mal = pd.DataFrame(anidictmodel)
     csvfile = st.file_uploader("Upload your locally saved DrAniList: ")
     malfile = st.file_uploader("Upload your MyAnimeList csv file: ")
     mal = pd.read_csv(malfile)
@@ -91,9 +90,9 @@ if not st.session_state.nextpage:
 
 
 
-    if not csvfile.empty:
+    if bool(csvfile) == True:
         all_ani_list = pd.read_csv(csvfile, sep = '*', index_col = 'S.no')
-    if not mal.empty:
+    if bool(mal) == True:
         all_ani_list = mal
     freshuse = st.checkbox("If you haven't already used DrAniLIst click here to get DrAniList file: ")
   
