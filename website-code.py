@@ -91,9 +91,9 @@ if not st.session_state.nextpage:
 
 
 
-    if not (csvfile == pd.DataFrame()):
+    if not csvfile.empty:
         all_ani_list = pd.read_csv(csvfile, sep = '*', index_col = 'S.no')
-    if not (mal == pd.DataFrame()):
+    if not mal.empty:
         all_ani_list = mal
     freshuse = st.checkbox("If you haven't already used DrAniLIst click here to get DrAniList file: ")
   
