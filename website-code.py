@@ -2,10 +2,13 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from PIL import Image
+import requests
+from io import BytesIO
 
 #def image
 def scale_img(image_path,x_axis,y_axis):
-  img = Image.open(image_path)
+  req = requests.get(image_path)
+  img = Image.open(BytesIO(req.content))
   resized_image = image.resize((x_axis,y_axis))
   return resized_image
 
