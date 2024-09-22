@@ -36,18 +36,18 @@ if st.session_state.nextpage:
   st.title("DrAniList")
   st.image(scale_img("https://github.com/Sys-stack/DrAniLIst/blob/image/HorizontalLine1.png?raw=true",5000,40))
 
-  st.text("""DrAniList is your go-to app for tracking your anime and drama viewing habits.
-With features designed for convenience and efficiency, you can easily save your 
-lists locally, making it simple to access your favorite shows anytime, anywhere.
+  st.text("""  DrAniList is your go-to app for tracking your anime and drama viewing habits.
+  With features designed for convenience and efficiency, you can easily save your 
+  lists locally, making it simple to access your favorite shows anytime, anywhere.
   
-Our user-friendly interface allows for quick file transfers, so you can share your
-lists effortlessly with friends or across devices. Plus, editing your entries is a
-breeze update your progress, add notes, or remove shows in just a few taps.
+  Our user-friendly interface allows for quick file transfers, so you can share your
+  lists effortlessly with friends or across devices. Plus, editing your entries is a
+  breeze update your progress, add notes, or remove shows in just a few taps.
   
-Whether you’re looking to organize your viewing experience or share your 
-recommendations with others, DrAniList has you covered. Take control of your anime
-and drama journey today!""")
-    checkbox = st.checkbox("Continue to use DrAniList")
+  Whether you’re looking to organize your viewing experience or share your 
+  recommendations with others, DrAniList has you covered. Take control of your anime
+  and drama journey today!""")
+  checkbox = st.checkbox("Continue to use DrAniList")
 
 if not st.session_state.nextpage:
     checkbox = 0
