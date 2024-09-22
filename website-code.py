@@ -147,7 +147,7 @@ if not st.session_state.nextpage:
     if cmd == "Show List":
       key = st.selectbox("Choose: ", ("Completed", 'Watching', 'On-hold', 'Dropped', 'Plan to watch'))
       dict1 = {'All': all_ani_list,
-               'Currently Watching': wat_list, 
+               'Watching': wat_list, 
                'Completed': owari_list, 
                'On-hold': oh_list, 
                'Dropped': drop_list, 
