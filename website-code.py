@@ -54,13 +54,48 @@ checkbox = st.checkbox("Continue to use DrAniList")
 
 if not st.session_state.nextpage:
     checkbox = 0
-    anidictmodel = {'S.no':[], 'Title':[],'Status':[],
+    anidictmodel = {'S.no':[], 'Title':[],'Status':[],'Type':[],'Episodes':[],'Watched Episodes':[],
             'Studio': [], 'Genre': [], 'Start-date': [], 
             'End-date': [], 'Source': [], 'Score': [], 
             'Tags': [], 'Season':[]}
-    
+    all_ani_list = pd.DataFrame(anidictmodel)
     csvfile = st.file_uploader("Upload your locally saved DrAniList: ")
-    all_ani_list = pd.read_csv(csvfile, sep = '*', index_col = 'S.no')
+    df = st.file_uploader("Upload your MyAnimeList csv file: ")
+
+    df.rename(columns={
+    'series_title': 'Title',
+    'series_type': 'Type',
+    'series_episodes': 'Episodes',
+    'my_watched_ep': 'Watched Episodes',
+    'my_start_date': 'Start-date',
+    'my_finish_date': 'End-date',
+    'my_score': 'Score',
+    'my_status': 'Status'
+     }, inplace=True)
+
+     cols_to_drop = []
+
+     for [col, cs] in df.T.iterrows():
+         if col not in all_ani_list.columns:
+             cols_to_drop.append(col)
+     df.drop(columns=cols_to_drop, inplace=True)
+
+     for col, cs in all_ani_list.T.iterrows():
+         if col not in df.columns:
+             df[col] = all_ani_list[col]
+      
+     i = 0
+     for row,rs in df.iterrows():
+         i += 1
+         df['S.no'][row] = int(i)
+     df.set_index('S.no', inplace = True)
+
+
+
+    if not csvfile == pd.DataFrame():
+        all_ani_list = pd.read_csv(csvfile, sep = '*', index_col = 'S.no')
+    if not df == pd.DataFrame():
+        all_ani_list = df
     freshuse = st.checkbox("If you haven't already used DrAniLIst click here to get DrAniList file: ")
   
     if freshuse:
