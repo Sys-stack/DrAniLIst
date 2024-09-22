@@ -70,23 +70,23 @@ if not st.session_state.nextpage:
     'my_status': 'Status'
      }, inplace=True)
 
-     cols_to_drop = []
+    cols_to_drop = []
 
-     for [col, cs] in df.T.iterrows():
-         if col not in all_ani_list.columns:
-             cols_to_drop.append(col)
-     df.drop(columns=cols_to_drop, inplace=True)
+    for [col, cs] in df.T.iterrows():
+        if col not in all_ani_list.columns:
+            cols_to_drop.append(col)
+    df.drop(columns=cols_to_drop, inplace=True)
 
-     for col, cs in all_ani_list.T.iterrows():
-         if col not in df.columns:
-             df[col] = all_ani_list[col]
+    for col, cs in all_ani_list.T.iterrows():
+        if col not in df.columns:
+            df[col] = all_ani_list[col]
       
-     i = 0
-     for row,rs in df.iterrows():
-         i += 1
-         df['S.no'][row] = int(i)
-     df.set_index('S.no', inplace = True)
-     df = df.reindex(columns = all_ani_list.columns)
+    i = 0
+    for row,rs in df.iterrows():
+        i += 1
+        df['S.no'][row] = int(i)
+    df.set_index('S.no', inplace = True)
+    df = df.reindex(columns = all_ani_list.columns)
 
 
 
