@@ -126,7 +126,7 @@ if not st.session_state.nextpage:
     oh_list = pd.DataFrame(anidictmodel)
     oh_list.set_index('S.no',inplace = True)
     for [row,rowseries] in all_ani_list.iterrows():
-      if all_ani_list['Status'][row] == 'On-hold':
+      if all_ani_list['Status'][row] == 'On-Hold':
         i += 1
         oh_list.loc[i] = rowseries
     #Dropped list
@@ -145,11 +145,11 @@ if not st.session_state.nextpage:
         ptw_list.loc[i] = rowseries
 
     if cmd == "Show List":
-      key = st.selectbox("Choose: ", ("All", "Completed", 'Watching', 'On-hold', 'Dropped', 'Plan to watch'))
+      key = st.selectbox("Choose: ", ("All", "Completed", 'Watching', 'On-Hold', 'Dropped', 'Plan to watch'))
       dict1 = {'All': all_ani_list,
                'Watching': wat_list, 
                'Completed': owari_list, 
-               'On-hold': oh_list, 
+               'On-Hold': oh_list, 
                'Dropped': drop_list, 
                'Plan to Watch': ptw_list}
       if key in dict1:
