@@ -9,7 +9,7 @@ from io import BytesIO
 def scale_img(image_path,x_axis,y_axis):
   req = requests.get(image_path)
   img = Image.open(BytesIO(req.content))
-  resized_image = image.resize((x_axis,y_axis))
+  resized_image = img.resize((x_axis,y_axis))
   return resized_image
 
 def sublistcheck(sub, master):
