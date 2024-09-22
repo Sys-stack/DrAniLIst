@@ -97,10 +97,6 @@ if not st.session_state.nextpage:
     freshuse = st.checkbox("If you haven't already used DrAniLIst click here to get DrAniList file: ")
   
     if freshuse:
-        anidictmodel = {'S.no':[], 'Title':[],'Status':[],
-                'Studio': [], 'Genre': [], 'Start-date': [], 
-                'End-date': [], 'Source': [], 'Score': [], 
-                'Tags': [], 'Season':[]}
         st.download_button(label = "DrAnilist file format download: ",
         data = "https://raw.githubusercontent.com/Sys-stack/DrAniLIst/refs/heads/files/anilist.csv?token=GHSAT0AAAAAACXV5I46XJPDM6HIRMJNP63MZXPZSBA",
         file_name = "DrAniList.csv",
