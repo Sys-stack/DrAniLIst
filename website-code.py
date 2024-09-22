@@ -47,7 +47,7 @@ breeze update your progress, add notes, or remove shows in just a few taps.
 Whether you’re looking to organize your viewing experience or share your 
 recommendations with others, DrAniList has you covered. Take control of your anime
 and drama journey today!""")
-checkbox = st.checkbox("Continue to use DrAniList")
+    checkbox = st.checkbox("Continue to use DrAniList")
 
 if not st.session_state.nextpage:
     checkbox = 0
@@ -56,6 +56,7 @@ if not st.session_state.nextpage:
             'End-date': [], 'Source': [], 'Score': [], 
             'Tags': [], 'Season':[]}
     all_ani_list = pd.DataFrame(anidictmodel)
+    mal = pd.DataFrame(anidictmodel)
     csvfile = st.file_uploader("Upload your locally saved DrAniList: ")
     malfile = st.file_uploader("Upload your MyAnimeList csv file: ")
     mal = pd.read_csv(malfile)
@@ -90,9 +91,9 @@ if not st.session_state.nextpage:
 
 
 
-    if not csvfile == pd.DataFrame():
+    if not (csvfile == pd.DataFrame()):
         all_ani_list = pd.read_csv(csvfile, sep = '*', index_col = 'S.no')
-    if not mal == pd.DataFrame():
+    if not (mal == pd.DataFrame()):
         all_ani_list = mal
     freshuse = st.checkbox("If you haven't already used DrAniLIst click here to get DrAniList file: ")
   
