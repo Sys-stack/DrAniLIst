@@ -58,41 +58,43 @@ if not st.session_state.nextpage:
     all_ani_list = pd.DataFrame(anidictmodel)
     csvfile = st.file_uploader("Upload your locally saved DrAniList: ")
     malfile = st.file_uploader("Upload your MyAnimeList csv file: ")
-    mal = pd.read_csv(malfile)
-    mal.rename(columns={
-    'series_title': 'Title',
-    'series_type': 'Type',
-    'series_episodes': 'Episodes',
-    'my_watched_ep': 'Watched Episodes',
-    'my_start_date': 'Start-date',
-    'my_finish_date': 'End-date',
-    'my_score': 'Score',
-    'my_status': 'Status'
-     }, inplace=True)
+    mal = pd.DataFrame() 
+    if bool(malfile) == True:
+        mal = pd.read_csv(malfile)
+        mal.rename(columns={
+        'series_title': 'Title',
+        'series_type': 'Type',
+        'series_episodes': 'Episodes',
+        'my_watched_ep': 'Watched Episodes',
+        'my_start_date': 'Start-date',
+        'my_finish_date': 'End-date',
+        'my_score': 'Score',
+        'my_status': 'Status'
+         }, inplace=True)
 
-    cols_to_drop = []
+        cols_to_drop = []
 
-    for [col, cs] in mal.T.iterrows():
-        if col not in all_ani_list.columns:
-            cols_to_drop.append(col)
-    mal.drop(columns=cols_to_drop, inplace=True)
+        for [col, cs] in mal.T.iterrows():
+            if col not in all_ani_list.columns:
+                cols_to_drop.append(col)
+        mal.drop(columns=cols_to_drop, inplace=True)
 
-    for col, cs in all_ani_list.T.iterrows():
-        if col not in mal.columns:
-            mal[col] = all_ani_list[col]
+        for col, cs in all_ani_list.T.iterrows():
+            if col not in mal.columns:
+                mal[col] = all_ani_list[col]
       
-    i = 0
-    for row,rs in mal.iterrows():
-        i += 1
-        mal['S.no'][row] = int(i)
-    mal.set_index('S.no', inplace = True)
-    mal = mal.reindex(columns = all_ani_list.columns)
+        i = 0
+        for row,rs in mal.iterrows():
+            i += 1
+            mal['S.no'][row] = int(i)
+        mal.set_index('S.no', inplace = True)
+        mal = mal.reindex(columns = all_ani_list.columns)
 
 
 
-    if bool(csvfile) == True:
+    if csvfile != None:
         all_ani_list = pd.read_csv(csvfile, sep = '*', index_col = 'S.no')
-    if bool(mal) == True:
+    if mal.empty != True:
         all_ani_list = mal
     freshuse = st.checkbox("If you haven't already used DrAniLIst click here to get DrAniList file: ")
   
