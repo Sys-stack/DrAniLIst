@@ -26,13 +26,7 @@ st.set_page_config(
   page_title = "DrAniList",
   page_icon = "",
   layout = 'wide',
-  initial_sidebar_state = 'collapsed',
-  theme = {'primaryColor':'',
-           'backgroundColor:'',
-           'font':'sans serif',
-           'textColor':''
-          })
-
+  initial_sidebar_state = 'collapsed')
 #page header and title
 
 if 'nextpage' not in st.session_state:
@@ -92,6 +86,7 @@ if not st.session_state.nextpage:
          i += 1
          df['S.no'][row] = int(i)
      df.set_index('S.no', inplace = True)
+     df = df.reindex(columns = all_ani_list.columns)
 
 
 
