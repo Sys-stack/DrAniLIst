@@ -131,7 +131,7 @@ if not st.session_state.nextpage:
         oh_list.loc[i] = rowseries
     #Dropped list
     drop_list = pd.DataFrame(anidictmodel)
-    ptw_list.set_index('S.no',inplace = True)
+    drop_list.set_index('S.no',inplace = True)
     for [row,rowseries] in all_ani_list.iterrows():
       if all_ani_list['Status'][row] == 'Dropped':
         i += 1
