@@ -99,13 +99,15 @@ if not st.session_state.nextpage:
     freshuse = st.checkbox("If you haven't already used DrAniLIst click here to get DrAniList file: ")
   
     if freshuse:
+        freshfile = requests.get("https://raw.githubusercontent.com/Sys-stack/DrAniLIst/refs/heads/files/anilist.csv?token=GHSAT0AAAAAACXV5I46XJPDM6HIRMJNP63MZXPZSBA")
         st.download_button(label = "DrAnilist file format download: ",
-        data = "https://raw.githubusercontent.com/Sys-stack/DrAniLIst/refs/heads/files/anilist.csv?token=GHSAT0AAAAAACXV5I46XJPDM6HIRMJNP63MZXPZSBA",
+        data = freshfile,
         file_name = "DrAniList.csv",
         mime = "text/csv")
       
     bgimg = 'https://raw.githubusercontent.com/Sys-stack/IP-Test/test/japan-background-digital-art.jpg'
-    st.markdown("<h2 style='text-align: center;background-imge: url({'bgimg'});'>DRANILIST</h2>", unsafe_allow_html=True)
+    st.markdown(f"<h2 style='text-align: center; background-image: url({bgimg});'>DRANILIST</h2>", unsafe_allow_html=True)
+
     cmd = st.selectbox('Choose: ', ("None","Show List", "Errors", 'Timeline', 'Statistics', 'Profile'))
     #completed list
     owari_list = pd.DataFrame(anidictmodel)
@@ -154,7 +156,70 @@ if not st.session_state.nextpage:
                'Plan to Watch': ptw_list}
       if key in dict1:
         st.table(dict1[key])
-    
+
+    #Error Checker
+    genre = ["Action", "Adventure", "Comedy",
+         "Drama", "Fantasy", "Horror",
+         "Mystery", "Psychological", "Romance",
+         "Sci-Fi", "Slice of Life", "Sports",
+         "Supernatural", "Historical",
+         "Music", "Mecha", "Magic",
+         "Military", "Superpower",
+         "Demons", "Isekai", "Harem",
+         "Yaoi", "Yuri", "Tragedy",
+         "Parody", "Ecchi", "Seinen",
+         "Shoujo", "Shounen", "Josei",
+         "Gender Bender", "Martial Arts", "Space",
+         "Game","School", "Vampire",
+         "Samurai", "Aliens", "Dystopian",
+         "Romantic Comedy", "Psychological Thriller",
+         "Gore", "Dark Fantasy", "Action Comedy",
+         "Historical Drama", "Superhero", "Post-Apocalyptic",
+         "CGDCT"]
+
+    stxt = 'There are status errors in the following rows: '
+    gtxt = 'There are genre errors in the following rows: '
+    rtxt = 'There are Score errors in the following rows: '
+    etxt = 'There are other errors in the following columns and rows: '
+    earguement = 0
+    sarguement = 0
+    garguement = 0
+    rarguement = 0
+
+    if cmd =='Errors':
+        for [row,rowseries] in all_ani_list.iterrows():
+    #Status column
+            if all_ani_list['Status'][row] != ('Completed' or 'Plan to Watch' or
+                                               'Dropped' or 'On-hold' or
+                                               'Watching'):
+                stxt += ('''
+                       ''' + '(Status)' + str(row))
+                sarguement = True
+
+#Genre Column
+
+            if sublistcheck(eval(all_ani_list['Genre'][row]),genre) == False:
+                gtxt += ('''
+                        ''' + '(Genre)' + str(row))
+                garguement = True
+
+            if all_ani_list['Score'][row] not in range(0,11):
+                rtxt += ('''
+                ''' + '(Score)' + str(row))
+                rarguement = True
+            for col in ['S.no','Title','Type','Episodes','Studio','Start-date','End-date','Source','Season']:
+                if bool(all_ani_list[col][row]) == False:
+                    earguement = True
+                    etxt += ('''
+                    ''' + '(' + str(col) + ')' + str(row))
+    if sarguement == True:
+        st.text(stxt)
+    if garguement == True:
+        st.text(gtxt)
+    if rarguement == True:
+        st.text(rtxt)
+    if earguement == True:
+        st.text(etxt)
   
     
 if checkbox:
