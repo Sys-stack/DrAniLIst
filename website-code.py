@@ -4,6 +4,7 @@ import numpy as np
 from PIL import Image
 import requests
 from io import BytesIO
+import ast
 
 #def image
 def scale_img(image_path,x_axis,y_axis):
@@ -101,12 +102,13 @@ if not st.session_state.nextpage:
     if freshuse:
         freshfile = requests.get("https://raw.githubusercontent.com/Sys-stack/DrAniLIst/refs/heads/files/anilist.csv?token=GHSAT0AAAAAACXV5I46XJPDM6HIRMJNP63MZXPZSBA")
         st.download_button(label = "DrAnilist file format download: ",
-        data = freshfile,
+        data = freshfile.content,
         file_name = "DrAniList.csv",
         mime = "text/csv")
       
-    bgimg = 'https://raw.githubusercontent.com/Sys-stack/IP-Test/test/japan-background-digital-art.jpg'
-    st.markdown(f"<h2 style='text-align: center; background-image: url({bgimg});'>DRANILIST</h2>", unsafe_allow_html=True)
+    gimg = 'https://raw.githubusercontent.com/Sys-stack/IP-Test/test/japan-background-digital-art.jpg'
+    bgimg = scale_img(gimg,800,100)
+    st.markdown(f"<h2 style='text-align: center; background-image: {bgimg};'>DRANILIST</h2>", unsafe_allow_html=True)
 
     cmd = st.selectbox('Choose: ', ("None","Show List", "Errors", 'Timeline', 'Statistics', 'Profile'))
     #completed list
@@ -197,15 +199,10 @@ if not st.session_state.nextpage:
                 sarguement = True
 
 #Genre Column
-            if bool(all_ani_list['Genre'][row]) == True:
-                if sublistcheck(eval(all_ani_list['Genre'][row]),genre) == False:
-                    gtxt += ('''
-                            ''' + '(Genre)' + str(row))
-                    garguement = True
-            else: 
+            if sublistcheck(ast.literal_eval(all_ani_list['Genre'][row]),genre) == False:
                 gtxt += ('''
-                        ''' + '(Genre)' + str(row))
-                garguement = True
+                            ''' + '(Genre)' + str(row))
+                arguement = True
 
             if all_ani_list['Score'][row] not in range(0,11):
                 rtxt += ('''
