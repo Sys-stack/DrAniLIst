@@ -207,7 +207,7 @@ if not st.session_state.nextpage:
             else: 
                 gtxt += ('''
                                 ''' + '(Genre)' + str(row))
-                    arguement = True
+                arguement = True
               
             if all_ani_list['Score'][row] not in range(0,11):
                 rtxt += ('''
