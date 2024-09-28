@@ -199,11 +199,16 @@ if not st.session_state.nextpage:
                 sarguement = True
 
 #Genre Column
-            if sublistcheck(ast.literal_eval(all_ani_list['Genre'][row]),genre) == False:
+            if all_ani_list['Genre'][row] != np.NaN:
+                if sublistcheck(ast.literal_eval(all_ani_list['Genre'][row]),genre) == False:
+                    gtxt += ('''
+                                ''' + '(Genre)' + str(row))
+                    arguement = True
+            else: 
                 gtxt += ('''
-                            ''' + '(Genre)' + str(row))
-                arguement = True
-
+                                ''' + '(Genre)' + str(row))
+                    arguement = True
+              
             if all_ani_list['Score'][row] not in range(0,11):
                 rtxt += ('''
                 ''' + '(Score)' + str(row))
