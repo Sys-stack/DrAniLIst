@@ -199,7 +199,7 @@ if not st.session_state.nextpage:
                 sarguement = True
 
 #Genre Column
-            if all_ani_list['Genre'][row] != np.nan:
+            if bool(all_ani_list['Genre'][row]) != False:
                 if sublistcheck(ast.literal_eval(all_ani_list['Genre'][row]),genre) == False:
                     gtxt += ('''
                                 ''' + '(Genre)' + str(row))
