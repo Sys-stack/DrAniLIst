@@ -197,8 +197,12 @@ if not st.session_state.nextpage:
                 sarguement = True
 
 #Genre Column
-
-            if sublistcheck(eval(all_ani_list['Genre'][row]),genre) == False:
+            if bool(all_ani_list['Genre'][row]) == True:
+                if sublistcheck(eval(all_ani_list['Genre'][row]),genre) == False:
+                    gtxt += ('''
+                            ''' + '(Genre)' + str(row))
+                    garguement = True
+            else: 
                 gtxt += ('''
                         ''' + '(Genre)' + str(row))
                 garguement = True
