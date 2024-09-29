@@ -259,12 +259,10 @@ if not st.session_state.nextpage:
         yearlist.sort()
         time = st.selectbox("Choose Timeline: ", ["Year", "Month", "Week"])
         
-        if time == 'year':
-            
+        if time == 'Year':
             epcount = []
             for i in yearlist:
                 epcount.append(0)
-              
             count = 0
             for i in yearlist:
                 for row,rs in all_ani_list.iterrows():
@@ -287,7 +285,7 @@ if not st.session_state.nextpage:
             yearimg = Image.open(yearfig)
             st.image(yearimg)
           
-        if time == 'month':
+        if time == 'Month':
             epcount = [0,0,0,0,0,0,0,0,0,0,0,0]
             months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
             yearsel = st.selectbox("Select year: ", yearlist)
