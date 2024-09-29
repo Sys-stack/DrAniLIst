@@ -282,7 +282,9 @@ if not st.session_state.nextpage:
                     count += 1
 
             yearfig = px.bar(x = yearlist, y = epcount, labels = {'x' : 'Year', 'y' : 'Episodes'})
-            yearfig.show()
+            st.plotly_chart(yearfig)
+        if time == 'month':
+            monthly = ["January"]
     
 if checkbox:
     st.session_state.nextpage = True
