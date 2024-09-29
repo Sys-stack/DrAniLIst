@@ -297,7 +297,7 @@ if not st.session_state.nextpage:
                 if yearb not in yearlist:
                     yearlist.append(int(yearb))
             yearlist.sort()
-            yearsel = st.selectbox("Select year: ": yearlist)
+            yearsel = st.selectbox("Select year: ", yearlist)
             
             for row,rs in all_ani_list.iterrows():
                 checkerf = all_ani_list['Start-date'][row]
