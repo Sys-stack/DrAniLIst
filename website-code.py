@@ -282,9 +282,29 @@ if not st.session_state.nextpage:
                     count += 1
 
             yearfig = px.bar(x = yearlist, y = epcount, labels = {'x' : 'Year', 'y' : 'Episodes'})
-            st.plotly_chart(yearfig)
+            st.image(yearfig)
         if time == 'month':
-            monthly = ["January"]
+            
+            months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+            yearlist = []
+            for row,rs in all_ani_list.iterrows():
+                checkerf = all_ani_list['Start-date'][row]
+                checkerb = all_ani_list['End-date'][row]
+                yearf = checkerf[0:4]
+                yearb = checkerb[0:4]
+                if yearf not in yearlist:
+                    yearlist.append(int(yearf))
+                if yearb not in yearlist:
+                    yearlist.append(int(yearb))
+            yearlist.sort()
+            yearsel = st.selectbox("Select year: ": yearlist)
+            
+            for row,rs in all_ani_list.iterrows():
+                checkerf = all_ani_list['Start-date'][row]
+                checkerb = all_ani_list['End-date'][row]
+                if (str(yearsel) == checkerf[0:4]) and (str(yearsel) == checkerb[0:4]):
+                    monthf = int(checkerf[5:7])
+                    monthb = int(checkerb[5:7])
     
 if checkbox:
     st.session_state.nextpage = True
