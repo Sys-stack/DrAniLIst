@@ -247,7 +247,7 @@ if not st.session_state.nextpage:
         st.markdown("Note: After you edit your list, be sure to re-upload the file")
     if cmd == 'Timeline':
         time = st.selectbox("Choose Timeline: ", ["Year", "Month", "Week"])
-        if time == 'year":
+        if time == 'year':
             yearlist = []
             for row,rs in all_ani_list.iterrows():
                 checkerf = all_ani_list['Start-date'][row]
