@@ -1,6 +1,6 @@
 pandas
 numpy
 pillow
-plotly
+matplotlib
 streamlit
 requests
