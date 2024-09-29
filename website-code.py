@@ -57,7 +57,7 @@ if not st.session_state.nextpage:
             'End-date': [], 'Source': [], 'Score': [], 
             'Tags': [], 'Season':[]}
     all_ani_list = pd.DataFrame(anidictmodel)
-    all_ani_list.set_index("S.no", inplace = True)
+    
     csvfile = st.file_uploader("Upload your locally saved DrAniList: ")
     malfile = st.file_uploader("Upload your MyAnimeList csv file: ")
     mal = pd.DataFrame() 
@@ -89,6 +89,7 @@ if not st.session_state.nextpage:
         for row,rs in mal.iterrows():
             i += 1
             mal['S.no'][row] = int(i)
+        all_ani_list.set_index("S.no", inplace = True)
         mal.set_index('S.no', inplace = True)
         mal = mal.reindex(columns = all_ani_list.columns)
 
