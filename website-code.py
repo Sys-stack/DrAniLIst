@@ -218,10 +218,10 @@ if not st.session_state.nextpage:
                     earguement = True
                     etxt += ('''
                     ''' + '(' + str(col) + ')' + str(row))
-    ssargue = st.checkbox('Show Status Errors':)
-    gsargue = st.checkbox('Show Genre Errors':)
-    rsargue = st.checkbox('Show Score Errors':)
-    esargue = st.checkbox('Show Empty Field Errors':)
+    ssargue = st.checkbox('Show Status Errors:')
+    gsargue = st.checkbox('Show Genre Errors:')
+    rsargue = st.checkbox('Show Score Errors:')
+    esargue = st.checkbox('Show Empty Field Errors:')
     if sarguement == True and ssargue == True:
         st.markdown(stxt)
     if garguement == True and gsargue == True:
