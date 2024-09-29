@@ -254,7 +254,7 @@ if not st.session_state.nextpage:
             yearb = checkerb[0:4]
             if yearf not in yearlist:
                  yearlist.append(int(yearf))
-             if yearb not in yearlist:
+            if yearb not in yearlist:
                  yearlist.append(int(yearb))
         yearlist.sort()
         time = st.selectbox("Choose Timeline: ", ["Year", "Month", "Week"])
