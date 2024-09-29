@@ -281,7 +281,7 @@ if not st.session_state.nextpage:
                             epcount[count + t] += ep_per_year
                     count += 1
 
-        px.bar(x = yearlist, y = epcount, labels = {'x' : 'Year', 'y' : 'Episodes'})
+            px.bar(x = yearlist, y = epcount, labels = {'x' : 'Year', 'y' : 'Episodes'})
   
     
 if checkbox:
