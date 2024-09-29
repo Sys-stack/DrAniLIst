@@ -5,6 +5,7 @@ from PIL import Image
 import requests
 from io import BytesIO
 import ast
+import plotly.express as px
 
 #def image
 def scale_img(image_path,x_axis,y_axis):
@@ -101,6 +102,8 @@ if not st.session_state.nextpage:
         all_ani_list = mal
     freshuse = st.checkbox("If you haven't already used DrAniLIst click here to get DrAniList file: ")
   
+    
+      
     if freshuse:
         freshfile = requests.get("https://raw.githubusercontent.com/Sys-stack/DrAniLIst/refs/heads/files/anilist.csv?token=GHSAT0AAAAAACXV5I46XJPDM6HIRMJNP63MZXPZSBA")
         st.download_button(label = "DrAnilist file format download: ",
@@ -236,11 +239,47 @@ if not st.session_state.nextpage:
 #---  
     if cmd == 'Edit':
 #--- ---
-        edited_all_ani_list = st.data_editor(all_ani_list)
+        edited_all_ani_list = st.data_editor(all_ani_list, num_rows = "dynamic")
         st.download_button(label = "Download edited file: ",
                            data = edited_all_ani_list.to_csv(sep = '*'),
                            file_name = "DrAniList.csv",
                            mime = "text/csv")
+        st.markdown("Note: After you edit your list, be sure to re-upload the file")
+    if cmd == 'Timeline':
+        time = st.selectbox("Choose Timeline: ", ["Year", "Month", "Week"])
+        if time == 'year":
+            yearlist = []
+            for row,rs in all_ani_list.iterrows():
+                checkerf = all_ani_list['Start-date'][row]
+                checkerb = all_ani_list['End-date'][row]
+                yearf = checkerf[0:4]
+                yearb = checkerb[0:4]
+                if yearf not in yearlist:
+                    yearlist.append(int(yearf))
+                if yearb not in yearlist:
+                    yearlist.append(int(yearb))
+            yearlist.sort()
+            epcount = []
+            for i in yearlist:
+                epcount.append(0)
+              
+            count = 0
+            for i in yearlist:
+                for row,rs in all_ani_list.iterrows():
+                    checkerf = all_ani_list['Start-date'][row]
+                    checkerb = all_ani_list['End-date'][row]
+                    yearf = checkerf[0:4]
+                    yearb = checkerb[0:4]
+                    if yearf == yearb:
+                        if yearf == i:
+                            epcount[count] += int(ast.literal_eval(all_ani_list['Episodes'][row]))
+                count += 1
+                    if (yearf != yearb) and (yearb != "0000") and (yearf != "0000"):
+                        dif = int(yearb) - int(yearf)
+                        ep_per_year = (int(ast.literal_eval(all_ani_list['Episodes'][row])))/dif
+                        for t in range(0,dif+1):
+                            epcount[count + t] += ep_per_year
+        px.bar(x = yearlist, y = epcount, labels = {'x' = 'Year', 'y' = 'Episodes'})
   
     
 if checkbox:
