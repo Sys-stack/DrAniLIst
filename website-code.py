@@ -5,7 +5,7 @@ from PIL import Image
 import requests
 from io import BytesIO
 import ast
-import plotly.express as px
+import matplotlib.pyplot as plt
 
 #def image
 def scale_img(image_path,x_axis,y_axis):
@@ -246,9 +246,7 @@ if not st.session_state.nextpage:
                            mime = "text/csv")
         st.markdown("Note: After you edit your list, be sure to re-upload the file")
     if cmd == 'Timeline':
-        time = st.selectbox("Choose Timeline: ", ["Year", "Month", "Week"])
-        if time == 'year':
-            yearlist = []
+        yearlist = []
             for row,rs in all_ani_list.iterrows():
                 checkerf = all_ani_list['Start-date'][row]
                 checkerb = all_ani_list['End-date'][row]
@@ -258,7 +256,11 @@ if not st.session_state.nextpage:
                     yearlist.append(int(yearf))
                 if yearb not in yearlist:
                     yearlist.append(int(yearb))
-            yearlist.sort()
+        yearlist.sort()
+        time = st.selectbox("Choose Timeline: ", ["Year", "Month", "Week"])
+        
+        if time == 'year':
+            
             epcount = []
             for i in yearlist:
                 epcount.append(0)
@@ -281,22 +283,12 @@ if not st.session_state.nextpage:
                             epcount[count + t] += ep_per_year
                     count += 1
 
-            yearfig = px.bar(x = yearlist, y = epcount, labels = {'x' : 'Year', 'y' : 'Episodes'})
-            st.image(yearfig)
+            plt.bar(yearlist, epcount)
+            st.pyplot(yearfig)
+          
         if time == 'month':
-            
+            epcount = [0,0,0,0,0,0,0,0,0,0,0,0]
             months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-            yearlist = []
-            for row,rs in all_ani_list.iterrows():
-                checkerf = all_ani_list['Start-date'][row]
-                checkerb = all_ani_list['End-date'][row]
-                yearf = checkerf[0:4]
-                yearb = checkerb[0:4]
-                if yearf not in yearlist:
-                    yearlist.append(int(yearf))
-                if yearb not in yearlist:
-                    yearlist.append(int(yearb))
-            yearlist.sort()
             yearsel = st.selectbox("Select year: ", yearlist)
             
             for row,rs in all_ani_list.iterrows():
@@ -305,6 +297,7 @@ if not st.session_state.nextpage:
                 if (str(yearsel) == checkerf[0:4]) and (str(yearsel) == checkerb[0:4]):
                     monthf = int(checkerf[5:7])
                     monthb = int(checkerb[5:7])
+                    
     
 if checkbox:
     st.session_state.nextpage = True
