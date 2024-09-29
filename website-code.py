@@ -110,7 +110,7 @@ if not st.session_state.nextpage:
     bgimg = scale_img(gimg,800,100)
     st.markdown(f"<h2 style='text-align: center; background-image: {bgimg};'>DRANILIST</h2>", unsafe_allow_html=True)
 
-    cmd = st.selectbox('Choose: ', ("None","Show List", "Errors", 'Timeline', 'Statistics', 'Profile'))
+    cmd = st.selectbox('Choose: ', ("None","Show List","Edit","Errors", 'Timeline', 'Statistics', 'Profile'))
     #completed list
     owari_list = pd.DataFrame(anidictmodel)
     owari_list.set_index('S.no',inplace = True)
@@ -218,14 +218,27 @@ if not st.session_state.nextpage:
                     earguement = True
                     etxt += ('''
                     ''' + '(' + str(col) + ')' + str(row))
-    if sarguement == True:
-        st.text(stxt)
-    if garguement == True:
-        st.text(gtxt)
-    if rarguement == True:
-        st.text(rtxt)
-    if earguement == True:
-        st.text(etxt)
+    ssargue = st.checkbox('Show Status Errors':)
+    gsargue = st.checkbox('Show Genre Errors':)
+    rsargue = st.checkbox('Show Score Errors':)
+    esargue = st.checkbox('Show Empty Field Errors':)
+    if sarguement == True and ssargue == True:
+        st.markdown(stxt)
+    if garguement == True and gsargue == True:
+        st.markdown(gtxt)
+    if rarguement == True and rsargue == True:
+        st.markdown(rtxt)
+    if earguement == True and esargue == True:
+        st.markdown(etxt)
+    # Edit Entries
+#---  
+    if cmd == 'Edit':
+#--- ---
+        edited_all_ani_list = st.data_editor(all_ani_list)
+        st.download_button(label = "Download edited file: ",
+                           data = edited_all_ani_list.to_csv(sep = '*'),
+                           file_name = "DrAniList.csv",
+                           mime = "text/csv")
   
     
 if checkbox:
