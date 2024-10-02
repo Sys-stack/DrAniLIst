@@ -269,6 +269,7 @@ if not st.session_state.nextpage:
             for i in yearlist:
                 epcount.append(0)
             count = 0
+            st.text(epcount)
             for i in yearlist:
                 for row,rs in all_ani_list.iterrows():
                     checkerf = all_ani_list['Start-date'][row]
