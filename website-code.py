@@ -287,7 +287,8 @@ if not st.session_state.nextpage:
                         for t in range(0,dif+1):
                             epcount[count + t] += ep_per_year
                 count += 1
-            st.text(yearlist, epcount)
+            st.text(yearlist)
+            st.text(epcount)
             #yearfig = px.bar(x = yearlist,y = epcount)
             #yearimg = Image.open(yearfig)
             #st.image(yearimg)
