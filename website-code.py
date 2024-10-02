@@ -277,10 +277,10 @@ if not st.session_state.nextpage:
                     checkerb = all_ani_list['End-date'][row]
                     yearf = checkerf[0:4]
                     yearb = checkerb[0:4]
-                    if (yearf == yearb) and (yearf == i):
+                    if (yearf == yearb) and (int(yearf) == i):
                         epcount[count] += int(all_ani_list['Episodes'][row])
 
-                    if (yearf != yearb) and (yearb != "0000") and (yearf != "0000") and (yearf == i):
+                    if (yearf != yearb) and (yearb != "0000") and (yearf != "0000") and (int(yearf) == i):
                         dif = int(yearb) - int(yearf)
                         
                         ep_per_year = (int(all_ani_list['Episodes'][row]))/dif
