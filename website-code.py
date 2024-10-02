@@ -248,13 +248,17 @@ if not st.session_state.nextpage:
     if cmd == 'Timeline':
         yearlist = []
         for row,rs in all_ani_list.iterrows():
-            checkerf = all_ani_list['Start-date'][row]
-            checkerb = all_ani_list['End-date'][row]
+            checkerf = 0
+            checkerb = 0
+            if bool(all_ani_list['Start-date'][row]) == True:
+                checkerf = all_ani_list['Start-date'][row]
+            if bool(all_ani_list['Start-date'][row]) == True:
+                checkerb = all_ani_list['End-date'][row]
             yearf = checkerf[0:4]
             yearb = checkerb[0:4]
-            if yearf not in yearlist:
+            if (yearf not in yearlist) and (bool(yearf) == True):
                  yearlist.append(int(yearf))
-            if yearb not in yearlist:
+            if (yearb not in yearlist) and (bool(yearb) == True):
                  yearlist.append(int(yearb))
         yearlist.sort()
         time = st.selectbox("Choose Timeline: ", ["Year", "Month", "Week"])
