@@ -272,7 +272,9 @@ if not st.session_state.nextpage:
             for i in yearlist:
                 ticount.append(0)
             count = 0
-            
+            excount = []
+            for i in yearlist:
+                excount.append(0)
             for i in yearlist:
                 
                 for row,rs in all_ani_list.iterrows():
@@ -285,16 +287,19 @@ if not st.session_state.nextpage:
                         epcount[count] += int(all_ani_list['Episodes'][row])
                         ticount[count] += 1
                         
-                    if (yearf != yearb) and (yearb != "0000") and (yearf != "0000") and (int(yearf) == i):
+                    elif (yearf != yearb) and (yearb != "0000") and (yearf != "0000") and (int(yearf) == i):
                         dif = int(yearb) - int(yearf)
                         ticount[count] += 1
                         ep_per_year = (int(all_ani_list['Episodes'][row]))/dif
                         for t in range(0,dif+1):
                             epcount[count + t] += ep_per_year
+                    else:
+                        excount[count] += 1
                 count += 1
             st.text(yearlist)
             st.text(epcount)
             st.text(ticount)
+            st.text(excount)
             #yearfig = px.bar(x = yearlist,y = epcount)
             #yearimg = Image.open(yearfig)
             #st.image(yearimg)
