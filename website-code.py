@@ -5,7 +5,7 @@ from PIL import Image
 import requests
 from io import BytesIO
 import ast
-import plotly.express as px
+#import plotly.express as px
 
 #def image
 def scale_img(image_path,x_axis,y_axis):
@@ -281,9 +281,9 @@ if not st.session_state.nextpage:
                             epcount[count + t] += ep_per_year
                     count += 1
             st.text(yearlist, epcount)
-            yearfig = px.bar(x = yearlist,y = epcount)
-            yearimg = Image.open(yearfig)
-            st.image(yearimg)
+            #yearfig = px.bar(x = yearlist,y = epcount)
+            #yearimg = Image.open(yearfig)
+            #st.image(yearimg)
           
         if time == 'Month':
             epcount = [0,0,0,0,0,0,0,0,0,0,0,0]
