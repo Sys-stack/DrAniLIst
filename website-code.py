@@ -262,6 +262,7 @@ if not st.session_state.nextpage:
                  yearlist.append(int(yearb))
         yearlist.sort()
         time = st.selectbox("Choose Timeline: ", ["Year", "Month", "Week"])
+        st.text(yearlist)
         
         if time == 'Year':
             epcount = []
