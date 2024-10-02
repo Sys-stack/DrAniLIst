@@ -254,8 +254,8 @@ if not st.session_state.nextpage:
                 checkerf = all_ani_list['Start-date'][row]
             if bool(all_ani_list['Start-date'][row]) == True:
                 checkerb = all_ani_list['End-date'][row]
-            yearf = checkerf[0:4]
-            yearb = checkerb[0:4]
+            yearf = int(checkerf[0:4])
+            yearb = int(checkerb[0:4])
             if (yearf not in yearlist) and (bool(yearf) == True):
                  yearlist.append(int(yearf))
             if (yearb not in yearlist) and (bool(yearb) == True):
