@@ -277,6 +277,7 @@ if not st.session_state.nextpage:
                     yearf = checkerf[0:4]
                     yearb = checkerb[0:4]
                     if yearf == yearb:
+                        st.text(count + i)
                         epcount[count + i] += int(all_ani_list['Episodes'][row])
 
                     if (yearf != yearb) and (yearb != "0000") and (yearf != "0000"):
