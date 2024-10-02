@@ -287,7 +287,7 @@ if not st.session_state.nextpage:
                         epcount[count] += int(all_ani_list['Episodes'][row])
                         ticount[count] += 1
                         
-                    elif (yearf != yearb) and (yearb != "0000") and (yearf != "0000") and (int(yearf) == i):
+                    elif (yearf != yearb) and (int(yearf) == i):
                         dif = int(yearb) - int(yearf)
                         ticount[count] += 1
                         ep_per_year = (int(all_ani_list['Episodes'][row]))/dif
