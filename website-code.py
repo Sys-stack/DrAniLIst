@@ -293,7 +293,7 @@ if not st.session_state.nextpage:
                         ep_per_year = (int(all_ani_list['Episodes'][row]))/dif
                         for t in range(0,dif+1):
                             epcount[count + t] += ep_per_year
-                    else:
+                    elif (int(yearf) == i):
                         excount[count] += 1
                 count += 1
             st.text(yearlist)
