@@ -262,30 +262,30 @@ if not st.session_state.nextpage:
                  yearlist.append(int(yearb))
         yearlist.sort()
         time = st.selectbox("Choose Timeline: ", ["Year", "Month", "Week"])
-        st.text(yearlist)
+        
         
         if time == 'Year':
             epcount = []
             for i in yearlist:
                 epcount.append(0)
             count = 0
-            st.text(epcount)
+            
             for i in yearlist:
+                
                 for row,rs in all_ani_list.iterrows():
                     checkerf = all_ani_list['Start-date'][row]
                     checkerb = all_ani_list['End-date'][row]
                     yearf = checkerf[0:4]
                     yearb = checkerb[0:4]
                     if yearf == yearb:
-                        st.text(count + i)
-                        epcount[count + i] += int(all_ani_list['Episodes'][row])
+                        epcount[count] += int(all_ani_list['Episodes'][row])
 
                     if (yearf != yearb) and (yearb != "0000") and (yearf != "0000"):
                         dif = int(yearb) - int(yearf)
                         ep_per_year = (int(ast.literal_eval(all_ani_list['Episodes'][row])))/dif
                         for t in range(0,dif+1):
-                            epcount[count + i + t] += ep_per_year
-                    
+                            epcount[count + t] += ep_per_year
+                count += 1
             st.text(yearlist, epcount)
             #yearfig = px.bar(x = yearlist,y = epcount)
             #yearimg = Image.open(yearfig)
