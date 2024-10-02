@@ -276,8 +276,7 @@ if not st.session_state.nextpage:
                     yearf = checkerf[0:4]
                     yearb = checkerb[0:4]
                     if yearf == yearb:
-                        if yearf == i:
-                            epcount[count] += int(ast.literal_eval(all_ani_list['Episodes'][row]))
+                        epcount[count] += int(all_ani_list['Episodes'][row])
 
                     if (yearf != yearb) and (yearb != "0000") and (yearf != "0000"):
                         dif = int(yearb) - int(yearf)
