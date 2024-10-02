@@ -282,7 +282,8 @@ if not st.session_state.nextpage:
 
                     if (yearf != yearb) and (yearb != "0000") and (yearf != "0000"):
                         dif = int(yearb) - int(yearf)
-                        ep_per_year = (int(ast.literal_eval(all_ani_list['Episodes'][row])))/dif
+                        
+                        ep_per_year = (int(all_ani_list['Episodes'][row]))/dif
                         for t in range(0,dif+1):
                             epcount[count + t] += ep_per_year
                 count += 1
