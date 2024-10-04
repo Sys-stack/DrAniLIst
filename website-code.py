@@ -271,20 +271,20 @@ if not st.session_state.nextpage:
                     data = response_au.json()
                     if data['data']:
                         anime_info = data['data'][0]
-                        if not all_ani_list["Studio"][row]:
+                        if not bool(all_ani_list["Studio"][row]):
                             studios = anime_info.get('studios', [])
                             all_ani_list["Studio"][row] = [studio['name'] for studio in studios]
-                        if not all_ani_list["Status"]:
+                        if not bool(all_ani_list["Status"]):
                             all_ani_list["Status"][row] = anime_info['status']
-                        if not all_ani_list["Type"][row]:
+                        if not bool(all_ani_list["Type"][row]):
                             all_ani_list["Type"][row] = anime_info['type']
-                        if not all_ani_list["Episodes"][row]:
+                        if not bool(all_ani_list["Episodes"][row]):
                             all_ani_list["Episodes"][row] = anime_info['episodes']
-                        if not all_ani_list["Source"][row]:
+                        if not bool(all_ani_list["Source"][row]):
                             all_ani_list["Source"][row] = "MyAnimeList"
-                        if not all_ani_list["Season"][row]:
+                        if not bool(all_ani_list["Season"][row]):
                             all_ani_list["Season"][row] = str(year(anime_info["aired"]["string"])) + check_season(anime_info["aired"]["string"])
-                        if not all_ani_list["Genre"][row]:
+                        if not bool(all_ani_list["Genre"][row]):
                             genre = anime_info.get('genres', [])
                             genre_names = []
                             for i in genre['name']:
