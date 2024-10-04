@@ -274,7 +274,7 @@ if not st.session_state.nextpage:
                         if not bool(all_ani_list["Studio"][row]):
                             studios = anime_info.get('studios', [])
                             all_ani_list["Studio"][row] = [studio['name'] for studio in studios]
-                        if not bool(all_ani_list["Status"]):
+                        if not bool(all_ani_list["Status"][row]):
                             all_ani_list["Status"][row] = anime_info['status']
                         if not bool(all_ani_list["Type"][row]):
                             all_ani_list["Type"][row] = anime_info['type']
