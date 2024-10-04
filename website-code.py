@@ -320,7 +320,12 @@ if not st.session_state.nextpage:
             monthfig = px.bar(x = months, y = epcount)
             st.plotly_chart(monthfig)
     if cmd == "Statistics":
-        
+        gen = []
+        for row,rs in all_ani_list:
+            if all_ani_list["Genre"][row] != np.nan:
+                for i in ast.literal_eval(all_ani_list["Genre"][row]:
+                    if i not in gen:
+                        gen.append(i)
     
 if checkbox:
     st.session_state.nextpage = True
