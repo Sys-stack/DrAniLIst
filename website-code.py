@@ -13,7 +13,18 @@ def scale_img(image_path,x_axis,y_axis):
   img = Image.open(BytesIO(req.content))
   resized_image = img.resize((x_axis,y_axis))
   return resized_image
-
+def check_season(date):
+  month_def = int(date[0:3])
+  if month_def in ['Jan','Feb','Mar']:
+      return "Winter"
+  if month_def in ['Apr','May','Jun']:
+      return "Spring"
+  if month_def in ['Jul','Aug','Sep']:
+      return "Sunmer"
+  if month_def in ['Oct','Nov','Dec']:
+      return "Fall"
+def year(date):
+  return int(date[8:12])
 def sublistcheck(sub, master):
     for i in sub:
         if i not in master:
@@ -53,8 +64,8 @@ if st.session_state.nextpage:
 
 if not st.session_state.nextpage:
     checkbox = 0
-    anidictmodel = {'S.no':[], 'Title':[],'Status':[],'Type':[],'Episodes':[],'Watched Episodes':[],
-            'Studio': [], 'Genre': [], 'Start-date': [], 
+    anidictmodel = {'S.no':[], 'Title':[],'User Status':[],'Type':[],'Episodes':[],'Watched Episodes':[],
+            'Studio': [], 'Genre': [],'Status' : [], 'Start-date': [], 
             'End-date': [], 'Source': [], 'Score': [], 
             'Tags': [], 'Season':[]}
     all_ani_list = pd.DataFrame(anidictmodel)
@@ -72,7 +83,7 @@ if not st.session_state.nextpage:
         'my_start_date': 'Start-date',
         'my_finish_date': 'End-date',
         'my_score': 'Score',
-        'my_status': 'Status'
+        'my_status': 'User Status'
          }, inplace=True)
 
         cols_to_drop = []
@@ -85,6 +96,9 @@ if not st.session_state.nextpage:
         for col, cs in all_ani_list.T.iterrows():
             if col not in mal.columns:
                 mal[col] = all_ani_list[col]
+        for row,rs in all_ani_list.iterrows():
+            if all_ani_list["User Status"][row] == "Completed":
+                all_ani_list["Watched Episodes"][row] = all_ani_list["Episodes"][row]
       
         i = 0
         for row,rs in mal.iterrows():
@@ -115,41 +129,41 @@ if not st.session_state.nextpage:
     bgimg = scale_img(gimg,800,100)
     st.markdown(f"<h2 style='text-align: center; background-image: {bgimg};'>DRANILIST</h2>", unsafe_allow_html=True)
 
-    cmd = st.selectbox('Choose: ', ("None","Show List","Edit","Errors", 'Timeline', 'Statistics', 'Profile'))
+    cmd = st.selectbox('Choose: ', ("None","Show List","Edit","Auto Update","Errors", 'Timeline', 'Statistics', 'Profile'))
     #completed list
     owari_list = pd.DataFrame(anidictmodel)
     owari_list.set_index('S.no',inplace = True)
     i = 0
     for [row,rowseries] in all_ani_list.iterrows():
-      if all_ani_list['Status'][row] == 'Completed':
+      if all_ani_list['User Status'][row] == 'Completed':
         i += 1
         owari_list.loc[i] = rowseries
     #watching list
     wat_list = pd.DataFrame(anidictmodel)
     wat_list.set_index('S.no',inplace = True)
     for [row,rowseries] in all_ani_list.iterrows():
-      if all_ani_list['Status'][row] == 'Watching':
+      if all_ani_list['User Status'][row] == 'Watching':
         i += 1
         wat_list.loc[i] = rowseries
     #on_hold list
     oh_list = pd.DataFrame(anidictmodel)
     oh_list.set_index('S.no',inplace = True)
     for [row,rowseries] in all_ani_list.iterrows():
-      if all_ani_list['Status'][row] == 'On-Hold':
+      if all_ani_list['User Status'][row] == 'On-Hold':
         i += 1
         oh_list.loc[i] = rowseries
     #Dropped list
     drop_list = pd.DataFrame(anidictmodel)
     drop_list.set_index('S.no',inplace = True)
     for [row,rowseries] in all_ani_list.iterrows():
-      if all_ani_list['Status'][row] == 'Dropped':
+      if all_ani_list['User Status'][row] == 'Dropped':
         i += 1
         drop_list.loc[i] = rowseries
     #ptw
     ptw_list = pd.DataFrame(anidictmodel)
     ptw_list.set_index('S.no',inplace = True)
     for [row,rowseries] in all_ani_list.iterrows():
-      if all_ani_list['Status'][row] == 'Plan to Watch':
+      if all_ani_list['User Status'][row] == 'Plan to Watch':
         i += 1
         ptw_list.loc[i] = rowseries
 
@@ -195,12 +209,12 @@ if not st.session_state.nextpage:
 
     if cmd =='Errors':
         for [row,rowseries] in all_ani_list.iterrows():
-    #Status column
-            if all_ani_list['Status'][row] != ('Completed' or 'Plan to Watch' or
+    #User Status column
+            if all_ani_list['User Status'][row] != ('Completed' or 'Plan to Watch' or
                                                'Dropped' or 'On-hold' or
                                                'Watching'):
                 stxt += ('''
-                       ''' + '(Status)' + str(row))
+                       ''' + '(User Status)' + str(row))
                 sarguement = True
 
 #Genre Column
@@ -223,7 +237,7 @@ if not st.session_state.nextpage:
                     earguement = True
                     etxt += ('''
                     ''' + '(' + str(col) + ')' + str(row))
-        ssargue = st.checkbox('Show Status Errors:')
+        ssargue = st.checkbox('Show User Status Errors:')
         gsargue = st.checkbox('Show Genre Errors:')
         rsargue = st.checkbox('Show Score Errors:')
         esargue = st.checkbox('Show Empty Field Errors:')
@@ -245,6 +259,38 @@ if not st.session_state.nextpage:
                            file_name = "DrAniList.csv",
                            mime = "text/csv")
         st.markdown("Note: After you edit your list, be sure to re-upload the file")
+
+    if cmd == 'Auto Update':
+        if st.button("Update DrAniList using MyAnimeList database"):
+            title_error = []
+            for row, rs in all_ani_list.iterrows():
+                temp_title = all_ani_list["Title"][row]
+                url = f"https://api.jikan.moe/v4/anime?q={anime_name}&limit=1"
+                response_au = response.get(url)
+                if response_au.status_code == 200:
+                    data = response.json()
+                    if data['data']:
+                        anime_info = data['data'][0]
+                        if not all_ani_list["Studio"][row]:
+                            studios = anime_info.get('studios', [])
+                            all_ani_list["Studio"][row] = [studio['name'] for studio in studios]
+                            
+                        if not all_ani_list["Type"][row]:
+                            all_ani_list["Type"][row] = anime_info['type']
+                        if not all_ani_list["Episodes"][row]:
+                            all_ani_list["Episodes"][row] = anime_info['episodes']
+                        if not all_ani_list["Source"][row]:
+                            all_ani_list["Source"][row] = "MyAnimeList"
+                        if not all_ani_list["Season"][row]:
+                            all_ani_list["Season"][row] = str(year(anime_info["aired"]["string"])) + check_season(anime_info["aired"]["string"])
+                        if not all_ani_list["Genre"][row]:
+                            genre = anime_info.get('genres', [])
+                            genre_names = []
+                            for i in genre['name']:
+                                genre_names.append(i)
+                            all_ani_list["Genre"][row] = genre_names
+                        
+                    
     if cmd == 'Timeline':
         yearlist = []
         for row,rs in all_ani_list.iterrows():
