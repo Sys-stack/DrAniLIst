@@ -268,13 +268,14 @@ if not st.session_state.nextpage:
                 url = f"https://api.jikan.moe/v4/anime?q={temp_title}&limit=1"
                 response_au = response.get(url)
                 if response_au.status_code == 200:
-                    data = response.json()
+                    data = response_au.json()
                     if data['data']:
                         anime_info = data['data'][0]
                         if not all_ani_list["Studio"][row]:
                             studios = anime_info.get('studios', [])
                             all_ani_list["Studio"][row] = [studio['name'] for studio in studios]
-                            
+                        if not all_ani_list["Status"]:
+                            all_ani_list["Status"][row] = anime_info['status']
                         if not all_ani_list["Type"][row]:
                             all_ani_list["Type"][row] = anime_info['type']
                         if not all_ani_list["Episodes"][row]:
