@@ -310,10 +310,15 @@ if not st.session_state.nextpage:
                 if (str(yearsel) == checkerf[0:4]) and (str(yearsel) == checkerb[0:4]):
                     monthf = int(checkerf[5:7])
                     monthb = int(checkerb[5:7])
-                    for m in range(0,12):
-                        if monthf == monthb:
-                            epcount[m] += all_ani_list["Episodes"][row]
-                    
+                    if monthf == monthb:
+                        epcount[monthf - 1] += all_ani_list["Episodes"][row]
+                    if monthf != monthb:
+                        dif = monthb - monthf
+                        ep_per_month = all_ani_list["Episodes"][row]/dif
+                        for z in range(0,dif):
+                            epcount[monthf + z] += ep_per_month
+            monthfig = px.bar(x = months, y = epcount)
+            st.plotly_chart(monthfig)
     
 if checkbox:
     st.session_state.nextpage = True
