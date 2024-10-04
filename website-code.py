@@ -5,7 +5,7 @@ from PIL import Image
 import requests
 from io import BytesIO
 import ast
-import plotly.express as px
+#import plotly.express as px
 
 #def image
 def scale_img(image_path,x_axis,y_axis):
@@ -266,7 +266,7 @@ if not st.session_state.nextpage:
             for row, rs in all_ani_list.iterrows():
                 temp_title = all_ani_list["Title"][row]
                 url = f"https://api.jikan.moe/v4/anime?q={temp_title}&limit=1"
-                response_au = response.get(url)
+                response_au = requests.get(url)
                 if response_au.status_code == 200:
                     data = response_au.json()
                     if data['data']:
