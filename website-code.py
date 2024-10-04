@@ -297,8 +297,7 @@ if not st.session_state.nextpage:
                         excount[count] += 1
                 count += 1
             yearfig = px.bar(x = yearlist,y = epcount)
-            yearimg = Image.open(yearfig)
-            st.image(yearimg)
+            st.plotly_chart(yearfig)
           
         if time == 'Month':
             epcount = [0,0,0,0,0,0,0,0,0,0,0,0]
@@ -311,6 +310,9 @@ if not st.session_state.nextpage:
                 if (str(yearsel) == checkerf[0:4]) and (str(yearsel) == checkerb[0:4]):
                     monthf = int(checkerf[5:7])
                     monthb = int(checkerb[5:7])
+                    for m in range(0,12):
+                        if monthf == monthb:
+                            epcount[m] += all_ani_list["Episodes"][row]
                     
     
 if checkbox:
