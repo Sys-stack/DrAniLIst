@@ -265,7 +265,7 @@ if not st.session_state.nextpage:
             title_error = []
             for row, rs in all_ani_list.iterrows():
                 temp_title = all_ani_list["Title"][row]
-                url = f"https://api.jikan.moe/v4/anime?q={anime_name}&limit=1"
+                url = f"https://api.jikan.moe/v4/anime?q={temp_title}&limit=1"
                 response_au = response.get(url)
                 if response_au.status_code == 200:
                     data = response.json()
@@ -289,6 +289,12 @@ if not st.session_state.nextpage:
                             for i in genre['name']:
                                 genre_names.append(i)
                             all_ani_list["Genre"][row] = genre_names
+        st.download_button(label = "Download edited file: ",
+                           data = all_ani_list.to_csv(sep = '*'),
+                           file_name = "DrAniList.csv",
+                           mime = "text/csv")
+        st.markdown("Note: After you edit your list, be sure to re-upload the file")
+        st.table(all_ani_list)
                         
                     
     if cmd == 'Timeline':
