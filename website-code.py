@@ -218,7 +218,7 @@ if not st.session_state.nextpage:
                 rtxt += ('''
                 ''' + '(Score)' + str(row))
                 rarguement = True
-            for col in ['S.no','Title','Type','Episodes','Studio','Start-date','End-date','Source','Season']:
+            for col in ['Title','Type','Episodes','Studio','Start-date','End-date','Source','Season']:
                 if bool(all_ani_list[col][row]) == False:
                     earguement = True
                     etxt += ('''
@@ -261,7 +261,7 @@ if not st.session_state.nextpage:
             if (yearb not in yearlist) and (bool(yearb) == True):
                  yearlist.append(int(yearb))
         yearlist.sort()
-        time = st.selectbox("Choose Timeline: ", ["Year", "Month", "Week"])
+        time = st.selectbox("Choose Timeline: ", ["Year", "Month"])
         
         
         if time == 'Year':
@@ -319,6 +319,8 @@ if not st.session_state.nextpage:
                             epcount[monthf + z] += ep_per_month
             monthfig = px.bar(x = months, y = epcount)
             st.plotly_chart(monthfig)
+    if cmd == "Statistics":
+        
     
 if checkbox:
     st.session_state.nextpage = True
