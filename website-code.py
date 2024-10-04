@@ -323,7 +323,7 @@ if not st.session_state.nextpage:
         gen = []
         for row,rs in all_ani_list:
             if all_ani_list["Genre"][row] != np.nan:
-                for i in ast.literal_eval(all_ani_list["Genre"][row]:
+                for i in ast.literal_eval(all_ani_list["Genre"][row]):
                     if i not in gen:
                         gen.append(i)
     
