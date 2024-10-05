@@ -294,6 +294,12 @@ if not st.session_state.nextpage:
                         genre_names = []
                         for i in genre:
                             genre_names.append(i['name'])
+                        themes = anime_info.get('themes')
+                        for i in themes:
+                            genre_names.append(i['name'])
+                        demo = anime_info.get('demographics')
+                        for i in demo:
+                            genre_names.append(i['name'])
                         all_ani_list["Genre"][row] = genre_names
         st.download_button(label = "Download edited file: ",
                            data = all_ani_list.to_csv(sep = '*'),
