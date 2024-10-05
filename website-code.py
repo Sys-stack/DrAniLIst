@@ -284,7 +284,7 @@ if not st.session_state.nextpage:
                         
                         all_ani_list["Source"][row] = "MyAnimeList"
                         
-                        all_ani_list["Season"][row] = str(anime_info["aired"]["prop"]["from"]["year"]) +' '+ str(anime_info["aired"]["season"])
+                        all_ani_list["Season"][row] = str(anime_info["aired"]["prop"]["from"]["year"]) +' '+ str(anime_info["season"])
                         
                         genre = anime_info.get('genres', [])
                         
