@@ -303,7 +303,7 @@ if not st.session_state.nextpage:
                            file_name = "DrAniList.csv",
                            mime = "text/csv")
         st.download_button(label = "omg",
-                           data = dat,
+                           data = data,
                            filename = "Jikanmoe.txt",
                            mime = "text")
         st.markdown("Note: After you edit your list, be sure to re-upload the file")
