@@ -267,7 +267,11 @@ if not st.session_state.nextpage:
                 temp_title = all_ani_list["Title"][row]
                 url = f"https://api.jikan.moe/v4/anime?q={temp_title}&limit=1"
                 response_au = requests.get(url)
-                
+                retry = 0
+                max_retry = 200
+                while (response_au.status_code != 200) and (retry < max_retry):
+                    retry += 1
+                    response_au = requests.get(url)
                 if response_au.status_code == 200:
                     data = response_au.json()
                     
