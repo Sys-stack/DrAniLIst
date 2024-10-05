@@ -261,7 +261,7 @@ if not st.session_state.nextpage:
         st.markdown("Note: After you edit your list, be sure to re-upload the file")
 
     if cmd == 'Auto Update':
-        if st.button("Update DrAniList using MyAnimeList database"):
+        if st.checkbox("Update DrAniList using MyAnimeList database"):
             title_error = []
             for row, rs in all_ani_list.iterrows():
                 temp_title = all_ani_list["Title"][row]
@@ -269,7 +269,7 @@ if not st.session_state.nextpage:
                 response_au = requests.get(url)
                 if response_au.status_code == 200:
                     data = response_au.json()
-                    all_ani_list = all_ani_list.fillna(np.nan)
+                    
                     if data['data']:
                         anime_info = data['data'][0]
                         if not bool(all_ani_list["Studio"][row]):
