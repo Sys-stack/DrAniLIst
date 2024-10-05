@@ -201,17 +201,17 @@ if not st.session_state.nextpage:
                 html_table += "</tbody></table>"
                 image_arg = True
             
-      key = st.selectbox("Choose: ", ("All", "Completed", 'Watching', 'On-Hold', 'Dropped', 'Plan to watch'))
-      dict1 = {'All': all_ani_list,
-               'Watching': wat_list, 
-               'Completed': owari_list, 
-               'On-Hold': oh_list, 
-               'Dropped': drop_list, 
-               'Plan to Watch': ptw_list}
-      if image_arg:
-          st.markdown(html_table, unsafe_allow_html=True)
-      elif key in dict1:
-          st.table(dict1[key])
+        key = st.selectbox("Choose: ", ("All", "Completed", 'Watching', 'On-Hold', 'Dropped', 'Plan to watch'))
+        dict1 = {'All': all_ani_list,
+                 'Watching': wat_list, 
+                 'Completed': owari_list, 
+                 'On-Hold': oh_list, 
+                 'Dropped': drop_list, 
+                 'Plan to Watch': ptw_list}
+        if image_arg:
+            st.markdown(html_table, unsafe_allow_html=True)
+        elif key in dict1:
+            st.table(dict1[key])
 
     #Error Checker
     genre = ["Action", "Adventure", "Comedy",
