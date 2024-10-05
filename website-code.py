@@ -108,7 +108,7 @@ if not st.session_state.nextpage:
             if mal["User Status"][row] == "Completed":
                 mal["Watched Episodes"][row] = mal["Episodes"][row]
             else:
-                mal["Watch Episodes"][row] = 0
+                mal["Watched Episodes"][row] = 0
 
 
     if csvfile != None:
