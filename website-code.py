@@ -20,9 +20,9 @@ def check_season(date):
   if month_def in ['Apr','May','Jun',4,5,6]:
       return "Spring"
   if month_def in ['Jul','Aug','Sep',7,8,9]:
-      return "Sunmer"
+      return " Summer"
   if month_def in ['Oct','Nov','Dec',10,11,12]:
-      return "Fall"
+      return " Fall"
 def year(date):
   return int(date[8:12])
 def sublistcheck(sub, master):
@@ -284,7 +284,7 @@ if not st.session_state.nextpage:
                         
                         all_ani_list["Source"][row] = "MyAnimeList"
                         
-                        all_ani_list["Season"][row] = str(anime_info["aired"]["prop"]["from"]["year"]) + check_season(anime_info["aired"]["prop"]["from"]["month"])
+                        all_ani_list["Season"][row] = str(anime_info["aired"]["prop"]["from"]["year"]) +' '+ str(anime_info["aired"]["season"])
                         
                         genre = anime_info.get('genres', [])
                         
