@@ -170,7 +170,7 @@ if not st.session_state.nextpage:
 
     if cmd == "Show List":
         image_arg = False
-        Images = st.selectbox("Show Images: ")
+        Images = st.checkbox("Show Images: ")
         if Images:
             all_ani_list["Image"] = 0
             for row, rs in all_ani_list.iterrows():
