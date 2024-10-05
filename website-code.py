@@ -267,9 +267,10 @@ if not st.session_state.nextpage:
                 temp_title = all_ani_list["Title"][row]
                 url = f"https://api.jikan.moe/v4/anime?q={temp_title}&limit=1"
                 response_au = requests.get(url)
+                st.text(url)
                 if response_au.status_code == 200:
                     data = response_au.json()
-                    
+                    st.text(data)
                     if data['data']:
                         anime_info = data['data'][0]
                         if not bool(all_ani_list["Studio"][row]):
