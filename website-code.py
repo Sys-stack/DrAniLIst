@@ -68,6 +68,10 @@ if not st.session_state.nextpage:
             'Studio': [], 'Genre': [],'Status' : [], 'Start-date': [], 
             'End-date': [], 'Source': [], 'Score': [], 
             'Tags': [], 'Season':[]}
+    anidictimagemodel = {'S.no':[],'Image':[], 'Title':[],'User Status':[],'Type':[],'Episodes':[],'Watched Episodes':[],
+            'Studio': [], 'Genre': [],'Status' : [], 'Start-date': [], 
+            'End-date': [], 'Source': [], 'Score': [], 
+            'Tags': [], 'Season':[]}
     all_ani_list = pd.DataFrame(anidictmodel)
     
     csvfile = st.file_uploader("Upload your locally saved DrAniList: ")
@@ -173,6 +177,7 @@ if not st.session_state.nextpage:
         Images = st.checkbox("Show Images: ")
         if Images:
             all_ani_list["Image"] = 0
+            all_ani_list = all_ani_list.reindex(pd.DataFrame(anidictimagemodel))
             for row, rs in all_ani_list.iterrows():
                 temp_title = all_ani_list["Title"][row]
                 url = f"https://api.jikan.moe/v4/anime?q={temp_title}&limit=1"
@@ -184,7 +189,7 @@ if not st.session_state.nextpage:
                     response_au = requests.get(url)
                 if response_au.status_code == 200:
                     data = response_au.json()
-                    anime_info = data['data'][0]['images']['jpg']['small_image_url']
+                    anime_info = data['data'][0]['images']['jpg']['large_image_url']
                     all_ani_list['Image'][row] = anime_info
                 html_table = "<table><thead><tr>"
                 for col in all_ani_list.columns:
