@@ -170,7 +170,8 @@ if not st.session_state.nextpage:
 
     if cmd == "Show List":
         image_arg = False
-        if st.selectbox("Show Images: "):
+        Images = st.selectbox("Show Images: ")
+        if Images:
             all_ani_list["Image"] = 0
             for row, rs in all_ani_list.iterrows():
                 temp_title = all_ani_list["Title"][row]
