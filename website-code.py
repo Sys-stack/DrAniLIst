@@ -184,7 +184,7 @@ if not st.session_state.nextpage:
                     response_au = requests.get(url)
                 if response_au.status_code == 200:
                     data = response_au.json()
-                    anime_info = data['data']['images']['small_image_url']
+                    anime_info = data['data'][0]['images']['small_image_url']
                     all_ani_list['Image'][row] = anime_info
                 html_table = "<table><thead><tr>"
                 for col in all_ani_list.columns:
