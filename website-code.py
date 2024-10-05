@@ -14,14 +14,14 @@ def scale_img(image_path,x_axis,y_axis):
   resized_image = img.resize((x_axis,y_axis))
   return resized_image
 def check_season(date):
-  month_def = int(date[0:3])
-  if month_def in ['Jan','Feb','Mar']:
+  month_def = date
+  if month_def in ['Jan','Feb','Mar',1,2,3]:
       return "Winter"
-  if month_def in ['Apr','May','Jun']:
+  if month_def in ['Apr','May','Jun',4,5,6]:
       return "Spring"
-  if month_def in ['Jul','Aug','Sep']:
+  if month_def in ['Jul','Aug','Sep',7,8,9]:
       return "Sunmer"
-  if month_def in ['Oct','Nov','Dec']:
+  if month_def in ['Oct','Nov','Dec',10,11,12]:
       return "Fall"
 def year(date):
   return int(date[8:12])
@@ -275,25 +275,25 @@ if not st.session_state.nextpage:
                         anime_info = data['data'][0]
                         st.text( data['data'])
                         st.text(anime_info)
-                        if not bool(all_ani_list["Studio"][row]):
-                            studios = anime_info.get('studios', [])
-                            all_ani_list["Studio"][row] = [studio['name'] for studio in studios]
-                        if not bool(all_ani_list["Status"][row]):
-                            all_ani_list["Status"][row] = anime_info['status']
-                        if not bool(all_ani_list["Type"][row]):
-                            all_ani_list["Type"][row] = anime_info['type']
-                        if not bool(all_ani_list["Episodes"][row]):
-                            all_ani_list["Episodes"][row] = anime_info['episodes']
-                        if not bool(all_ani_list["Source"][row]):
-                            all_ani_list["Source"][row] = "MyAnimeList"
-                        if not bool(all_ani_list["Season"][row]):
-                            all_ani_list["Season"][row] = str(year(anime_info["aired"]["string"])) + check_season(anime_info["aired"]["string"])
-                        if not bool(all_ani_list["Genre"][row]):
-                            genre = anime_info.get('genres', [])
-                            genre_names = []
-                            for i in genre['name']:
-                                genre_names.append(i)
-                            all_ani_list["Genre"][row] = genre_names
+                        
+                        studios = anime_info.get('studios', [])
+                        all_ani_list["Studio"][row] = [studio['name'] for studio in studios]
+                        
+                        all_ani_list["Status"][row] = anime_info['status']
+                      
+                        all_ani_list["Type"][row] = anime_info['type']
+                      
+                        all_ani_list["Episodes"][row] = anime_info['episodes']
+                        
+                        all_ani_list["Source"][row] = "MyAnimeList"
+                        
+                        all_ani_list["Season"][row] = str(anime_info["prop"]["year"]) + check_season(anime_info["prop"]["month"])
+                        
+                        genre = anime_info.get('genres', [])
+                        genre_names = []
+                        for i in genre['name']:
+                            genre_names.append(i)
+                        all_ani_list["Genre"][row] = genre_names
         st.download_button(label = "Download edited file: ",
                            data = all_ani_list.to_csv(sep = '*'),
                            file_name = "DrAniList.csv",
