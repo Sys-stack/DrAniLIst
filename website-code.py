@@ -269,6 +269,7 @@ if not st.session_state.nextpage:
                 response_au = requests.get(url)
                 if response_au.status_code == 200:
                     data = response_au.json()
+                    all_ani_list = all_ani_list.fillna(np.nan)
                     if data['data']:
                         anime_info = data['data'][0]
                         if not bool(all_ani_list["Studio"][row]):
