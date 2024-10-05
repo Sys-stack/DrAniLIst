@@ -177,7 +177,7 @@ if not st.session_state.nextpage:
         Images = st.checkbox("Show Images: ")
         if Images:
             all_ani_list["Image"] = 0
-            all_ani_list = pd.DataFrame(anidictimagemodel).reindex(pd.DataFrame(all_ani_list))
+            all_ani_list = all_ani_list.reindex(columns = pd.DataFrame(anidictimagemodel))
             for row, rs in all_ani_list.iterrows():
                 temp_title = all_ani_list["Title"][row]
                 url = f"https://api.jikan.moe/v4/anime?q={temp_title}&limit=1"
