@@ -5,7 +5,7 @@ from PIL import Image
 import requests
 from io import BytesIO
 import ast
-#import plotly.express as px
+import plotly.express as px
 
 #def image
 def scale_img(image_path,x_axis,y_axis):
