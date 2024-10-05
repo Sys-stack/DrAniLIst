@@ -191,7 +191,7 @@ if not st.session_state.nextpage:
                     if col != 'Image URL':
                         html_table += f"<th>{col}</th>"
                 html_table += "<th>Cover</th></tr></thead><tbody>"
-                for index, row in df.iterrows():
+                for index, row in all_ani_list.iterrows():
                     html_table += "<tr>"
                     for col in all_ani_list.columns:
                         if col == 'Image':
