@@ -169,6 +169,38 @@ if not st.session_state.nextpage:
         ptw_list.loc[i] = rowseries
 
     if cmd == "Show List":
+        image_arg = False
+        if st.selectbox("Show Images": ):
+            all_ani_list["Image"] = 0
+            for row, rs in all_ani_list.iterrows():
+                temp_title = all_ani_list["Title"][row]
+                url = f"https://api.jikan.moe/v4/anime?q={temp_title}&limit=1"
+                response_au = requests.get(url)
+                retry = 0
+                max_retry = 200
+                while (response_au.status_code != 200) and (retry < max_retry):
+                    retry += 1
+                    response_au = requests.get(url)
+                if response_au.status_code == 200:
+                    data = response_au.json()
+                    anime_info = data['data']['image']['small_image_url']
+                    all_ani_list['Image'][row] = anime_info
+                html_table = "<table><thead><tr>"
+                for col in all_ani_list.columns:
+                    if col != 'Image URL':
+                        html_table += f"<th>{col}</th>"
+                html_table += "<th>Cover</th></tr></thead><tbody>"
+                for index, row in df.iterrows():
+                    html_table += "<tr>"
+                    for col in all_ani_list.columns:
+                        if col == 'Image':
+                            html_table += f'<td><img src="{row[col]}" width="100"></td>'
+                        else:
+                            html_table += f"<td>{row[col]}</td>"
+                    html_table += "</tr>"
+                html_table += "</tbody></table>"
+                image_arg = True
+            
       key = st.selectbox("Choose: ", ("All", "Completed", 'Watching', 'On-Hold', 'Dropped', 'Plan to watch'))
       dict1 = {'All': all_ani_list,
                'Watching': wat_list, 
@@ -176,8 +208,10 @@ if not st.session_state.nextpage:
                'On-Hold': oh_list, 
                'Dropped': drop_list, 
                'Plan to Watch': ptw_list}
-      if key in dict1:
-        st.table(dict1[key])
+      if image_arg:
+          st.markdown(html_table, unsafe_allow_html=True)
+      elif key in dict1:
+          st.table(dict1[key])
 
     #Error Checker
     genre = ["Action", "Adventure", "Comedy",
