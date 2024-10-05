@@ -287,7 +287,7 @@ if not st.session_state.nextpage:
                         all_ani_list["Season"][row] = str(anime_info["aired"]["prop"]["from"]["year"]) + check_season(anime_info["aired"]["prop"]["from"]["month"])
                         
                         genre = anime_info.get('genres', [])
-                        st.text(genre)
+                        
                         genre_names = []
                         for i in genre:
                             genre_names.append(i['name'])
