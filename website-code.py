@@ -273,6 +273,8 @@ if not st.session_state.nextpage:
                     st.text(data)
                     if data['data']:
                         anime_info = data['data'][0]
+                        st.text( data['data'])
+                        st.text(anime_info)
                         if not bool(all_ani_list["Studio"][row]):
                             studios = anime_info.get('studios', [])
                             all_ani_list["Studio"][row] = [studio['name'] for studio in studios]
