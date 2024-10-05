@@ -270,7 +270,7 @@ if not st.session_state.nextpage:
                 
                 if response_au.status_code == 200:
                     data = response_au.json()
-                    
+                    st.download_button(data = data)
                     if data['data']:
                         anime_info = data['data'][0]
                         studios = anime_info.get('studios', [])
