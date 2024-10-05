@@ -270,7 +270,7 @@ if not st.session_state.nextpage:
                 
                 if response_au.status_code == 200:
                     data = response_au.json()
-                    st.download_button(data = response_au.json, 
+                    st.download_button(data = response_au.json(), 
                                       label = "omg",
                                       filename = "Jikanmoe.txt",
                                       mime = "text")
