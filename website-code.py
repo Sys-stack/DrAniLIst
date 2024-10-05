@@ -96,11 +96,6 @@ if not st.session_state.nextpage:
         for col, cs in all_ani_list.T.iterrows():
             if col not in mal.columns:
                 mal[col] = all_ani_list[col]
-        for row,rs in all_ani_list.iterrows():
-            if all_ani_list["User Status"][row] == "Completed":
-                all_ani_list["Watched Episodes"][row] = all_ani_list["Episodes"][row]
-            else:
-                all_ani_list["Watch Episodes"][row] = 0
       
         i = 0
         for row,rs in mal.iterrows():
@@ -109,7 +104,11 @@ if not st.session_state.nextpage:
         all_ani_list.set_index("S.no", inplace = True)
         mal.set_index('S.no', inplace = True)
         mal = mal.reindex(columns = all_ani_list.columns)
-
+        for row,rs in all_ani_list.iterrows():
+            if all_ani_list["User Status"][row] == "Completed":
+                all_ani_list["Watched Episodes"][row] = all_ani_list["Episodes"][row]
+            else:
+                all_ani_list["Watch Episodes"][row] = 0
 
 
     if csvfile != None:
