@@ -302,10 +302,6 @@ if not st.session_state.nextpage:
                            data = all_ani_list.to_csv(sep = '*'),
                            file_name = "DrAniList.csv",
                            mime = "text/csv")
-        st.download_button(label = "omg",
-                           data = str(response_au.json()),
-                           file_name = "Jikanmoe.txt",
-                           mime = "text")
         st.markdown("Note: After you edit your list, be sure to re-upload the file")
         st.table(all_ani_list)
                         
