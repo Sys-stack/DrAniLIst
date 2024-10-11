@@ -427,11 +427,96 @@ if not st.session_state.nextpage:
             st.plotly_chart(monthfig)
     if cmd == "Statistics":
         gen = []
-        for row,rs in all_ani_list:
-            if all_ani_list["Genre"][row] != np.nan:
-                for i in ast.literal_eval(all_ani_list["Genre"][row]):
+        ep_count = []    
+        season = ["Sprint", "Winter", 'Summer', 'Fall']
+        season_count = []
+        studio = []
+    
+        for row, rs in all_ani_list.iterrows():
+            if pd.notna(rs["Studio"]):
+                name = ast.literal_eval(all_ani_list["Studio"][row])
+                print(name)
+                for i in name:
+                    if i not in studio:
+                        studio.append(i)
+        
+            if pd.notna(rs["Genre"]):
+            
+                lst = ast.literal_eval(rs["Genre"])
+                for i in lst:
                     if i not in gen:
                         gen.append(i)
+        studio_count = add_zero_ele(studio, [])
+        ep_count = [0] * len(gen) 
+        studio_runtime = 0
+    
+        for i in studio:
+            if pd.notna(rs['Studio']):
+                studio_in_row = ast.literal_eval(all_ani_list["Studio"][row])
+                if sublistcheck([i], studio_in_row):
+                    studio_count[studio_runtime] += 1
+                    studio_runtime += 1
+                
+        for row, rs in all_ani_list.iterrows():
+            if pd.notna(rs["Genre"]):
+                genres_in_row = ast.literal_eval(rs["Genre"])
+                for index, genre in enumerate(gen):
+                    if sublistcheck([genre], genres_in_row):
+                        ep_count[index] += 1
+    fig1 = px.pie(
+        names=gen,    
+        values=ep_count,
+        title="Number of titles in each Genre: ",
+        color_discrete_sequence=px.colors.sequential.Plasma,
+        hole=0.4
+    )
+
+    fig1.update_traces(textinfo='percent+label',
+                       marker=dict(line=dict(color='#000000', width=2)))
+
+    fig1.update_layout(
+        title_font=dict(size=24),
+        legend=dict(title='Categories', font=dict(size=14)),
+        margin=dict(t=50, b=0, l=0, r=0)
+    fig2 = px.pie(
+        names=season,    
+        values=season_count,
+        title="Number of titles in each season: ",
+        color_discrete_sequence=px.colors.sequential.Plasma,
+        hole=0.4
+    )
+
+    fig2.update_traces(textinfo='percent+label',
+                       marker=dict(line=dict(color='#000000', width=2)))
+
+    fig2.update_layout(
+        title_font=dict(size=24),
+        legend=dict(title='Categories', font=dict(size=14)),
+        margin=dict(t=50, b=0, l=0, r=0)
+    
+    fig3 = px.pie(
+        names=studio,    
+        values=studio_count,
+        title="Number of titles in each Studio: ",
+        color_discrete_sequence=px.colors.sequential.Plasma,
+        hole=0.4
+    )
+
+    fig3.update_traces(textinfo='percent+label',
+                       marker=dict(line=dict(color='#000000', width=2)))
+
+    fig3.update_layout(
+        title_font=dict(size=24),
+        legend=dict(title='Categories', font=dict(size=14)),
+        margin=dict(t=50, b=0, l=0, r=0)
+
+    col1, col2, col3 = st.columns(3)
+    with col1:
+       st.plotly_chart(fig1)
+    with col2:
+       st.plotly_chart(fig2)
+    with col3:
+       st.plotly_chart(fig3)
     
 if checkbox:
     st.session_state.nextpage = True
