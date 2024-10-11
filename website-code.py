@@ -467,11 +467,12 @@ if not st.session_state.nextpage:
         studio_runtime = 0
     
         for i in studio:
-            if pd.notna(rs['Studio']):
-                studio_in_row = ast.literal_eval(all_ani_list["Studio"][row])
-                if (i in studio_in_row) and ((rs["User Status"] == "Completed") or (rs["User Status"] == "Watching")):
-                    studio_count[studio_runtime] += 1
-                    studio_runtime += 1
+            for row,rs in all_ani_list.iterrows():
+                if pd.notna(rs['Studio']):
+                    studio_in_row = ast.literal_eval(all_ani_list["Studio"][row])
+                    if (i in studio_in_row) and ((rs["User Status"] == "Completed") or (rs["User Status"] == "Watching")):
+                        studio_count[studio_runtime] += 1
+                        studio_runtime += 1
                 
         for row, rs in all_ani_list.iterrows():
             if pd.notna(rs["Genre"]) and ((rs["User Status"] == "Completed") or (rs["User Status"] == "Watching")):
