@@ -26,7 +26,9 @@ def check_season(date):
 def year(date):
   return int(date[0:4])
 def month(date):
-  return int(date[4:4])
+  return int(date[5:7])
+def day(date):
+  return int(date[8:10])
 def sublistcheck(sub, master):
     for i in sub:
         if i not in master:
@@ -475,60 +477,60 @@ if not st.session_state.nextpage:
                 for index, genre in enumerate(gen):
                     if sublistcheck([genre], genres_in_row):
                         ep_count[index] += 1
-    fig1 = px.pie(
-        names=gen,    
-        values=ep_count,
-        title="Number of titles in each Genre: ",
-        color_discrete_sequence=px.colors.sequential.Plasma,
-        hole=0.4
-    )
+        fig1 = px.pie(
+            names=gen,    
+            values=ep_count,
+            title="Number of titles in each Genre: ",
+            color_discrete_sequence=px.colors.sequential.Plasma,
+            hole=0.4
+        )
 
-    fig1.update_traces(textinfo='percent+label',
-                       marker=dict(line=dict(color='#000000', width=2)))
+        fig1.update_traces(textinfo='percent+label',
+                           marker=dict(line=dict(color='#000000', width=2)))
 
-    fig1.update_layout(
-        title_font=dict(size=24),
-        legend=dict(title='Categories', font=dict(size=14)),
-        margin=dict(t=50, b=0, l=0, r=0))
-    fig2 = px.pie(
-        names=season,    
-        values=season_count,
-        title="Number of titles in each season: ",
-        color_discrete_sequence=px.colors.sequential.Plasma,
-        hole=0.4
-    )
+        fig1.update_layout(
+            title_font=dict(size=24),
+            legend=dict(title='Categories', font=dict(size=14)),
+            margin=dict(t=50, b=0, l=0, r=0))
+        fig2 = px.pie(
+            names=season,    
+            values=season_count,
+            title="Number of titles in each season: ",
+            color_discrete_sequence=px.colors.sequential.Plasma,
+            hole=0.4
+        )
 
-    fig2.update_traces(textinfo='percent+label',
-                       marker=dict(line=dict(color='#000000', width=2)))
+        fig2.update_traces(textinfo='percent+label',
+                           marker=dict(line=dict(color='#000000', width=2)))
 
-    fig2.update_layout(
-        title_font=dict(size=24),
-        legend=dict(title='Categories', font=dict(size=14)),
-        margin=dict(t=50, b=0, l=0, r=0))
+        fig2.update_layout(
+            title_font=dict(size=24),
+            legend=dict(title='Categories', font=dict(size=14)),
+            margin=dict(t=50, b=0, l=0, r=0))
     
-    fig3 = px.pie(
-        names=studio,    
-        values=studio_count,
-        title="Number of titles in each Studio: ",
-        color_discrete_sequence=px.colors.sequential.Plasma,
-        hole=0.4
-    )
+        fig3 = px.pie(
+            names=studio,    
+            values=studio_count,
+            title="Number of titles in each Studio: ",
+            color_discrete_sequence=px.colors.sequential.Plasma,
+            hole=0.4
+        )
 
-    fig3.update_traces(textinfo='percent+label',
-                       marker=dict(line=dict(color='#000000', width=2)))
+        fig3.update_traces(textinfo='percent+label',
+                           marker=dict(line=dict(color='#000000', width=2)))
 
-    fig3.update_layout(
-        title_font=dict(size=24),
-        legend=dict(title='Categories', font=dict(size=14)),
-        margin=dict(t=50, b=0, l=0, r=0))
+        fig3.update_layout(
+            title_font=dict(size=24),
+            legend=dict(title='Categories', font=dict(size=14)),
+            margin=dict(t=50, b=0, l=0, r=0))
 
-    col1, col2, col3 = st.columns(3)
-    with col1:
-       st.plotly_chart(fig1)
-    with col2:
-       st.plotly_chart(fig2)
-    with col3:
-       st.plotly_chart(fig3)
+        col1, col2, col3 = st.columns(3)
+        with col1:
+           st.plotly_chart(fig1)
+        with col2:
+           st.plotly_chart(fig2)
+        with col3:
+           st.plotly_chart(fig3)
     
 if checkbox:
     st.session_state.nextpage = True
