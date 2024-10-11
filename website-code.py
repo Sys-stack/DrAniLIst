@@ -446,7 +446,7 @@ if not st.session_state.nextpage:
         gen = []
         ep_count = []    
         season = ["Sprint", "Winter", 'Summer', 'Fall']
-        season_count = []
+        season_count = add_zero_ele(season, [])
         studio = []
     
         for row, rs in all_ani_list.iterrows():
