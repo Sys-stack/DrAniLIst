@@ -37,7 +37,10 @@ def sublistcheck(sub, master):
         else:
             y = True
     return y
-  
+def add_zero_ele(scan, apend):
+    for i in scan:
+        apend.append(0)
+    return apend
 #page configuration
 st.set_page_config(
   page_title = "DrAniList",
