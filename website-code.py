@@ -397,17 +397,17 @@ if not st.session_state.nextpage:
                     yearf = checkerf[0:4]
                     yearb = checkerb[0:4]
                     
-                    if (yearf == yearb) and (int(yearf) == i):
+                    if ((yearf == yearb) and (int(yearf) == i)) and ((rs["User Status"] == "Completed") or (rs["User Status"] == "Watching")):
                         epcount[count] += int(all_ani_list['Episodes'][row])
                         ticount[count] += 1
                         
-                    elif (yearf != yearb) and (int(yearf) == i):
+                    elif ((yearf != yearb) and (int(yearf) == i)) and ((rs["User Status"] == "Completed") or (rs["User Status"] == "Watching")):
                         dif = int(yearb) - int(yearf)
                         ticount[count] += 1
                         ep_per_year = (int(all_ani_list['Episodes'][row]))/dif
                         for t in range(0,dif+1):
                             epcount[count + t] += ep_per_year
-                    elif (int(yearf) == i):
+                    elif ((int(yearf) == i)) and ((rs["User Status"] == "Completed") or (rs["User Status"] == "Watching")):
                         excount[count] += 1
                 count += 1
             yearfig = px.bar(x = yearlist,y = epcount)
@@ -421,7 +421,7 @@ if not st.session_state.nextpage:
             for row,rs in all_ani_list.iterrows():
                 checkerf = all_ani_list['Start-date'][row]
                 checkerb = all_ani_list['End-date'][row]
-                if (str(yearsel) == checkerf[0:4]) and (str(yearsel) == checkerb[0:4]):
+                if (str(yearsel) == checkerf[0:4]) and (str(yearsel) == checkerb[0:4]) and ((rs["User Status"] == "Completed") or (rs["User Status"] == "Watching")):
                     monthf = int(checkerf[5:7])
                     monthb = int(checkerb[5:7])
                     if monthf == monthb:
@@ -444,38 +444,37 @@ if not st.session_state.nextpage:
             
     if cmd == "Statistics":
         gen = []
-        ep_count = []    
         season = ["Sprint", "Winter", 'Summer', 'Fall']
         season_count = add_zero_ele(season, [])
         studio = []
     
         for row, rs in all_ani_list.iterrows():
-            if pd.notna(rs["Studio"]):
+            if pd.notna(rs["Studio"]) and ((rs["User Status"] == "Completed") or (rs["User Status"] == "Watching")):
                 name = ast.literal_eval(all_ani_list["Studio"][row])
-                print(name)
+                
                 for i in name:
                     if i not in studio:
                         studio.append(i)
         
-            if pd.notna(rs["Genre"]):
+            if pd.notna(rs["Genre"]) and ((rs["User Status"] == "Completed") or (rs["User Status"] == "Watching")):
             
                 lst = ast.literal_eval(rs["Genre"])
                 for i in lst:
                     if i not in gen:
                         gen.append(i)
         studio_count = add_zero_ele(studio, [])
-        ep_count = [0] * len(gen) 
+        ep_count = add_zero_ele(gen, [])
         studio_runtime = 0
     
         for i in studio:
             if pd.notna(rs['Studio']):
                 studio_in_row = ast.literal_eval(all_ani_list["Studio"][row])
-                if sublistcheck([i], studio_in_row):
+                if (i in studio_in_row) and ((rs["User Status"] == "Completed") or (rs["User Status"] == "Watching")):
                     studio_count[studio_runtime] += 1
                     studio_runtime += 1
                 
         for row, rs in all_ani_list.iterrows():
-            if pd.notna(rs["Genre"]):
+            if pd.notna(rs["Genre"]) and ((rs["User Status"] == "Completed") or (rs["User Status"] == "Watching")):
                 genres_in_row = ast.literal_eval(rs["Genre"])
                 for index, genre in enumerate(gen):
                     if sublistcheck([genre], genres_in_row):
