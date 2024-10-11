@@ -24,7 +24,9 @@ def check_season(date):
   if month_def in ['Oct','Nov','Dec',10,11,12]:
       return " Fall"
 def year(date):
-  return int(date[8:12])
+  return int(date[0:4])
+def month(date):
+  return int(date[4:4])
 def sublistcheck(sub, master):
     for i in sub:
         if i not in master:
@@ -134,7 +136,6 @@ if not st.session_state.nextpage:
     bgimg = scale_img(gimg,800,100)
     st.markdown(f"<h2 style='text-align: center; background-image: {bgimg};'>DRANILIST</h2>", unsafe_allow_html=True)
 
-    cmd = st.selectbox('Choose: ', ("None","Show List","Edit","Auto Update","Errors", 'Timeline', 'Statistics', 'Profile'))
     #completed list
     owari_list = pd.DataFrame(anidictmodel)
     owari_list.set_index('S.no',inplace = True)
@@ -172,6 +173,8 @@ if not st.session_state.nextpage:
         i += 1
         ptw_list.loc[i] = rowseries
 
+    cmd = st.selectbox('Choose: ', ("None","Show List","Edit","Auto Update","Errors", 'Timeline', 'Statistics'))
+  
     if cmd == "Show List":
         image_arg = False
         Images = st.checkbox("Show Images: ")
@@ -367,7 +370,7 @@ if not st.session_state.nextpage:
             if (yearb not in yearlist) and (bool(yearb) == True):
                  yearlist.append(int(yearb))
         yearlist.sort()
-        time = st.selectbox("Choose Timeline: ", ["Year", "Month"])
+        time = st.selectbox("Choose Timeline: ", ["Year", "Month","Day of Month"])
         
         
         if time == 'Year':
@@ -425,6 +428,15 @@ if not st.session_state.nextpage:
                             epcount[monthf + z] += ep_per_month
             monthfig = px.bar(x = months, y = epcount)
             st.plotly_chart(monthfig)
+        if time == 'Day of Month':
+            months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+            days_in_months = {"January": 31, "February": 28, "March": 31, "April": 30, "May": 31, "June": 30, "July": 31, "August": 31, "September": 30, "October": 31, "November": 30, "December": 31}
+            st.selectbox("Choose Year: ", yearlist)
+            st.selectbox("Choose Month: ", months)
+            days = days_in_month[months]
+
+            
+            
     if cmd == "Statistics":
         gen = []
         ep_count = []    
@@ -477,7 +489,7 @@ if not st.session_state.nextpage:
     fig1.update_layout(
         title_font=dict(size=24),
         legend=dict(title='Categories', font=dict(size=14)),
-        margin=dict(t=50, b=0, l=0, r=0)
+        margin=dict(t=50, b=0, l=0, r=0))
     fig2 = px.pie(
         names=season,    
         values=season_count,
@@ -492,7 +504,7 @@ if not st.session_state.nextpage:
     fig2.update_layout(
         title_font=dict(size=24),
         legend=dict(title='Categories', font=dict(size=14)),
-        margin=dict(t=50, b=0, l=0, r=0)
+        margin=dict(t=50, b=0, l=0, r=0))
     
     fig3 = px.pie(
         names=studio,    
@@ -508,7 +520,7 @@ if not st.session_state.nextpage:
     fig3.update_layout(
         title_font=dict(size=24),
         legend=dict(title='Categories', font=dict(size=14)),
-        margin=dict(t=50, b=0, l=0, r=0)
+        margin=dict(t=50, b=0, l=0, r=0))
 
     col1, col2, col3 = st.columns(3)
     with col1:
