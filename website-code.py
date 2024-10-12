@@ -480,15 +480,13 @@ if not st.session_state.nextpage:
                         gen.append(i)
         studio_count = add_zero_ele(studio, [])
         ep_count = add_zero_ele(gen, [])
-        studio_runtime = 0
     
         for i in studio:
             for row,rs in all_ani_list.iterrows():
                 if pd.notna(rs['Studio']):
                     studio_in_row = ast.literal_eval(all_ani_list["Studio"][row])
                     if (i in studio_in_row) and ((rs["User Status"] == "Completed") or (rs["User Status"] == "Watching")):
-                        studio_count[studio_runtime] += 1
-                        studio_runtime += 1
+                        studio_count[studio.index(i)] =+ 1
                 
         for row, rs in all_ani_list.iterrows():
             if pd.notna(rs["Genre"]) and ((rs["User Status"] == "Completed") or (rs["User Status"] == "Watching")):
