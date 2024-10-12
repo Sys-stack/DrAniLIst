@@ -160,8 +160,7 @@ if not st.session_state.nextpage:
 
     # ---------------------------------------------- Design Header 
     gimg = 'https://raw.githubusercontent.com/Sys-stack/IP-Test/test/japan-background-digital-art.jpg'
-    bgimg = scale_img(gimg,800,100)
-    st.markdown(f"<h2 style='text-align: center; background-image: {bgimg};'>DRANILIST</h2>", unsafe_allow_html=True)
+    st.markdown(f"<h2 style='text-align: center; background-image: {gimg};'>DRANILIST</h2>", unsafe_allow_html=True)
 
     #  ----------------------------------------------  SubLists
     #completed list
@@ -399,7 +398,7 @@ if not st.session_state.nextpage:
             if (yearb not in yearlist) and (bool(yearb) == True):
                  yearlist.append(int(yearb))
         yearlist.sort()
-        time = st.selectbox("Choose Timeline: ", ["Year", "Month","Day of Month"])
+        time = st.selectbox("Choose Timeline: ", ["Year", "Month"])
         
         
         if time == 'Year':
@@ -457,42 +456,7 @@ if not st.session_state.nextpage:
                             epcount[monthf + z] += ep_per_month
             monthfig = px.bar(x = months, y = epcount)
             st.plotly_chart(monthfig)
-        if time == 'Day of Month':
-            months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-            days_in_months = {"January": 31, "February": 28, "March": 31, "April": 30, "May": 31, "June": 30, "July": 31, "August": 31, "September": 30, "October": 31, "November": 30, "December": 31}
-            yearDOM = st.selectbox("Choose Year: ", yearlist)
-            monthDOM = st.selectbox("Choose Month: ", months)
-            days = days_in_month[months]
-            daylist = []
-            if ((yearDOM % 4) == 0) and (monthDOM == "February"):
-                days += 1
-            for I in range(1, days+1):
-                daylist.append(i)
-            ep_perday = add_zero_ele(range(0,days), [])
-            
-            for row, rs in all_ani_list.iterrows():
-                if (year(rs["Start-date"]) == yearDOM) and (month(rs["End-date"]) == (months.index(monthDOM) + 1)) and month(rs["Start-date"]) == (months.index(monthDOM) + 1)) and (rs["User Status"] == "Completed"):
-                    ep = int(row["Episodes"])
-                    endmonth = month(rs["End-date"])
-                    endyear = year(rs["End-date"])
-                    stayear = year(rs["Start-date"])
-                    stamonth = month(rs["Start-date"])
-
-                    if (stamonth == endmonth):
-                        dif = day(rs["End-date"]) - day(rs["Start-date"])
-                        epaday = rs["Episodes"]/dif
-                        ind = daylist.index(day(rs["Start-date"]))
-                        for i in range(0, dif):
-                            ep_perday[ind] += epaday
-
-                    elif (stamonth != endmonth):
-                        dif = day(rs["End-date"])
-                        epaday 
-                        
-                elif (year(rs["Start-date"]) == yearDOM) and (month(rs["Start-date"]) == (months.index(monthDOM) + 1)) and (rs["User Status"] != "Plan to Watch"):
-                    ep = int(row["Watched Episodes"])
-                
-                
+        
             
     if cmd == "Statistics":
         gen = []
@@ -579,13 +543,12 @@ if not st.session_state.nextpage:
             legend=dict(title='Categories', font=dict(size=14)),
             margin=dict(t=50, b=0, l=0, r=0))
 
-        col1, col2, col3 = st.columns(3)
+        col1, col2 = st.columns(2)
         with col1:
            st.plotly_chart(fig1)
         with col2:
            st.plotly_chart(fig2)
-        with col3:
-           st.plotly_chart(fig3)
+        st.plotly_chart(fig3)
     
 if checkbox:
     st.session_state.nextpage = True
