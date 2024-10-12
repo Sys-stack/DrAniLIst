@@ -7,12 +7,14 @@ from io import BytesIO
 import ast
 import plotly.express as px
 
-#def image
+#---------------------------------------------- DEF
+
 def scale_img(image_path,x_axis,y_axis):
   req = requests.get(image_path)
   img = Image.open(BytesIO(req.content))
   resized_image = img.resize((x_axis,y_axis))
-  return resized_image
+  return Image.open(resized_image)
+  
 def check_season(date):
   month_def = date
   if month_def in ['Jan','Feb','Mar',1,2,3]:
@@ -23,12 +25,16 @@ def check_season(date):
       return " Summer"
   if month_def in ['Oct','Nov','Dec',10,11,12]:
       return " Fall"
+    
 def year(date):
   return int(date[0:4])
+  
 def month(date):
   return int(date[5:7])
+  
 def day(date):
   return int(date[8:10])
+  
 def sublistcheck(sub, master):
     for i in sub:
         if i not in master:
@@ -37,14 +43,20 @@ def sublistcheck(sub, master):
         else:
             y = True
     return y
+
+
 def add_zero_ele(scan, apend):
     for i in scan:
         apend.append(0)
     return apend
+
+
 #page configuration
+icon = requests.get("https://raw.githubusercontent.com/Sys-stack/DrAniLIst/refs/heads/image/logo.jpg")
+iconimg = Image.open(icon)
 st.set_page_config(
   page_title = "DrAniList",
-  page_icon = "",
+  page_icon = iconimg,
   layout = 'wide',
   initial_sidebar_state = 'collapsed')
 #page header and title
