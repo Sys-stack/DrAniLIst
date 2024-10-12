@@ -158,7 +158,7 @@ if not st.session_state.nextpage:
 
     # ---------------------------------------------- Design Header 
     gimg = 'https://raw.githubusercontent.com/Sys-stack/IP-Test/test/japan-background-digital-art.jpg'
-    st.markdown(f"<h2 style='text-align: center; background-image: {gimg};'>DRANILIST</h2>", unsafe_allow_html=True)
+    st.markdown(f"<h2 style='text-align: center; background-image: url({gimg});'>DRANILIST</h2>", unsafe_allow_html=True)
 
     #  ----------------------------------------------  SubLists
     #completed list
