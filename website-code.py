@@ -52,11 +52,9 @@ def add_zero_ele(scan, apend):
 
 
 #---------------------------------------------- Page configuration
-icon = requests.get("https://raw.githubusercontent.com/Sys-stack/DrAniLIst/refs/heads/image/logo.jpg")
-iconimg = Image.open(BytesIO(icon.content))
 st.set_page_config(
   page_title = "DrAniList",
-  page_icon = iconimg,
+  page_icon = "https://raw.githubusercontent.com/Sys-stack/DrAniLIst/refs/heads/image/logo.jpg",
   layout = 'wide',
   initial_sidebar_state = 'collapsed')
 
