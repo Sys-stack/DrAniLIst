@@ -13,7 +13,7 @@ def scale_img(image_path,x_axis,y_axis):
   req = requests.get(image_path)
   img = Image.open(BytesIO(req.content))
   resized_image = img.resize((x_axis,y_axis))
-  return Image.open(resized_image)
+  return resized_image
   
 def check_season(date):
   month_def = date
@@ -51,15 +51,16 @@ def add_zero_ele(scan, apend):
     return apend
 
 
-#page configuration
+#---------------------------------------------- Page configuration
 icon = requests.get("https://raw.githubusercontent.com/Sys-stack/DrAniLIst/refs/heads/image/logo.jpg")
-iconimg = Image.open(icon)
+iconimg = Image.open(BytesIO(icon.content))
 st.set_page_config(
   page_title = "DrAniList",
   page_icon = iconimg,
   layout = 'wide',
   initial_sidebar_state = 'collapsed')
-#page header and title
+
+#---------------------------------------------- Page header and title
 
 if 'nextpage' not in st.session_state:
   st.session_state.nextpage = True
@@ -81,7 +82,9 @@ if st.session_state.nextpage:
   and drama journey today!""")
   checkbox = st.checkbox("Continue to use DrAniList")
 
+# ---------------------------------------------- Page 2
 if not st.session_state.nextpage:
+    # ---------------------------------------------- KW
     checkbox = 0
     anidictmodel = {'S.no':[], 'Title':[],'User Status':[],'Type':[],'Episodes':[],'Watched Episodes':[],
             'Studio': [], 'Genre': [],'Status' : [], 'Start-date': [], 
@@ -92,10 +95,14 @@ if not st.session_state.nextpage:
             'End-date': [], 'Source': [], 'Score': [], 
             'Tags': [], 'Season':[]}
     all_ani_list = pd.DataFrame(anidictmodel)
-    
+
+    #---------------------------------------------- Uploaders
+  
     csvfile = st.file_uploader("Upload your locally saved DrAniList: ")
     malfile = st.file_uploader("Upload your MyAnimeList csv file: ")
     mal = pd.DataFrame() 
+
+    # ---------------------------------------------- Converter
     if bool(malfile) == True:
         mal = pd.read_csv(malfile)
         mal.rename(columns={
@@ -133,7 +140,7 @@ if not st.session_state.nextpage:
             else:
                 mal["Watched Episodes"][row] = 0
 
-
+    # ---------------------------------------------- Assign
     if csvfile != None:
         all_ani_list = pd.read_csv(csvfile, sep = '*', index_col = 'S.no')
     if mal.empty != True:
@@ -141,7 +148,8 @@ if not st.session_state.nextpage:
     freshuse = st.checkbox("If you haven't already used DrAniLIst click here to get DrAniList file: ")
   
     
-      
+    # ---------------------------------------------- Newbie
+  
     if freshuse:
         freshfile = requests.get("https://raw.githubusercontent.com/Sys-stack/DrAniLIst/refs/heads/files/anilist.csv?token=GHSAT0AAAAAACXV5I46XJPDM6HIRMJNP63MZXPZSBA")
         st.download_button(label = "DrAnilist file format download: ",
@@ -149,10 +157,13 @@ if not st.session_state.nextpage:
         file_name = "DrAniList.csv",
         mime = "text/csv")
       
+
+    # ---------------------------------------------- Design Header 
     gimg = 'https://raw.githubusercontent.com/Sys-stack/IP-Test/test/japan-background-digital-art.jpg'
     bgimg = scale_img(gimg,800,100)
     st.markdown(f"<h2 style='text-align: center; background-image: {bgimg};'>DRANILIST</h2>", unsafe_allow_html=True)
 
+    #  ----------------------------------------------  SubLists
     #completed list
     owari_list = pd.DataFrame(anidictmodel)
     owari_list.set_index('S.no',inplace = True)
@@ -190,8 +201,9 @@ if not st.session_state.nextpage:
         i += 1
         ptw_list.loc[i] = rowseries
 
+    # Command ---------------------------------------------- 
     cmd = st.selectbox('Choose: ', ("None","Show List","Edit","Auto Update","Errors", 'Timeline', 'Statistics'))
-  
+    # ---------------------------------------------- Viewing list
     if cmd == "Show List":
         image_arg = False
         Images = st.checkbox("Show Images: ")
@@ -239,7 +251,7 @@ if not st.session_state.nextpage:
         elif key in dict1:
             st.table(dict1[key])
 
-    #Error Checker
+    # ----------------------------------------------  Errors in list
     genre = ["Action", "Adventure", "Comedy",
          "Drama", "Fantasy", "Horror",
          "Mystery", "Psychological", "Romance",
