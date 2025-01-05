@@ -149,7 +149,7 @@ if not st.session_state.nextpage:
     # ---------------------------------------------- Newbie
   
     if freshuse:
-        freshfile = requests.get("https://raw.githubusercontent.com/Sys-stack/DrAniLIst/refs/heads/files/anilist.csv?token=GHSAT0AAAAAACXV5I46XJPDM6HIRMJNP63MZXPZSBA")
+        freshfile = requests.get("https://raw.githubusercontent.com/Sys-stack/DrAniLIst/refs/heads/files/anilist.csv")
         st.download_button(label = "DrAnilist file format download: ",
         data = freshfile.content,
         file_name = "DrAniList.csv",
