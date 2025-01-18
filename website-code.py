@@ -204,6 +204,16 @@ if not st.session_state.nextpage:
     if cmd == "Show List":
         image_arg = False
         Images = st.checkbox("Show Images: ")
+    #--------------------------------------------Filtering options
+        filter_option=st.checkbox(‘Enable Filtering’)
+        if filter_option:
+            filter_column = st.selectbox(‘select column to filter’,all_ani_list.columns)
+            filter_condition=st.text_input(“Enter condition (exact match):”)
+
+            if filter_condition:
+                filtered_list = all_ani_list[all_ani_list[filter_column].astype(str)==filter_condition]
+                st.write(“Filtered Results:”)
+                st.table(filtered_list)
         if Images:
             all_ani_list["Image"] = 0
             all_ani_list = all_ani_list.reindex(columns = pd.DataFrame(anidictimagemodel).columns)
